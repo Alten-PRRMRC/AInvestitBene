@@ -8,6 +8,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  protected readonly title = signal('AInvestBene');
-}
+export class AppComponent { }
