@@ -1,12 +1,15 @@
 // Import required modules
 import {Component, signal, WritableSignal} from '@angular/core';
+import {UpperCasePipe} from '@angular/common';
 
 /**
  * This component serves as container as a homepage
  */
 @Component({
   selector: 'app-expense',
-  imports: [],
+  imports: [
+    UpperCasePipe
+  ],
   templateUrl: './expense.component.html',
   styleUrl: './expense.component.css'
 })
