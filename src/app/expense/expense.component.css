@@ -1,3 +1,13 @@
 section {
   text-align: center;
+  align-content: center;
+}
+
+p {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 4.5rem;
+  color: #38A169;
 }
