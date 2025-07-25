@@ -19,4 +19,9 @@ export class ExpenseComponent {
    * @protected
    */
   protected readonly title: WritableSignal<string> = signal('AInvestBene');
+  /**
+   * Signal containing the application description
+   * @protected
+   */
+  protected readonly description: WritableSignal<string> = signal(' Manage and track your personal expenses efficiently. ');
 }
