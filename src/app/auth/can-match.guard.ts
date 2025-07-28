@@ -1,7 +1,7 @@
 // Import required modules
 import { Injectable } from "@angular/core";
 import type { CanMatch } from "@angular/router";
-import type { LocalstorageService } from "../localstorage/localstorage.service";
+import { LocalstorageService } from "../localstorage/localstorage.service";
 import type { Observable } from "rxjs";
 
 /**
