@@ -1,0 +1,1 @@
+import{Fa as n,Ga as m,Ja as r,ra as t}from"./chunk-ZFZ5SDHC.js";var a=class o{canDeactivate(){return!0}static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["expense-form"]],decls:2,vars:0,template:function(e,p){e&1&&(n(0,"p"),r(1,"form works!"),m())},encapsulation:2})};export{a as FormComponent};
