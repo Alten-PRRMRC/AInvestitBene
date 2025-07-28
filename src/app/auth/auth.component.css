@@ -1,0 +1,30 @@
+section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+button {
+	border: none;
+	font-size: 24px;
+	font-weight: bold;
+	color: white;
+	padding: 15px;
+}
+
+.signup {
+	color: #000;
+	background-color: #68d391;
+}
+
+.login {
+	background-color: #38a169;
+}
+
+.login:hover {
+	background-color: #40b676;
+}
+
+.signup:hover {
+	background-color: #76eba3;
+}
