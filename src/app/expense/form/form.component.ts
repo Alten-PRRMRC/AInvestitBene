@@ -112,4 +112,24 @@ export class FormComponent implements OnInit {
 		});
 		this.formDirty = false;
 	}
+
+	/**
+	 * Called by the canDeactivateGuard when the user tries to navigate away from the form
+	 *
+	 * @returns
+	 * - true if the form has no unsaved changes (allowing navigation)
+	 * - A Promise that resolves to the user's choice from a confirmation dialog if there are unsaved changes
+	 */
+	canDeactivate(): boolean | Promise<boolean> {
+		if (!this.formDirty) {
+			return true;
+		}
+
+		return new Promise<boolean>((resolve) => {
+			const result = window.confirm(
+				"You have unsaved changes. Do you really want to leave?",
+			);
+			resolve(result);
+		});
+	}
 }
