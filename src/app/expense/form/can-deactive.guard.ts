@@ -1,8 +1,8 @@
 // Import required modules
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CanDeactivate } from '@angular/router';
-import { CanFormDeactivate } from './form-deactive.model';
+import { Injectable } from "@angular/core";
+import { CanDeactivate } from "@angular/router";
+import { Observable } from "rxjs";
+import { CanFormDeactivate } from "./form-deactive.model";
 
 /**
  * Guard responsible to checks if the form component can be deactivated.
@@ -11,15 +11,16 @@ import { CanFormDeactivate } from './form-deactive.model';
  * @see CanFormDeactivate
  */
 @Injectable({
-  providedIn: 'root',
+	providedIn: "root",
 })
 export class canDeactivateGuard implements CanDeactivate<CanFormDeactivate> {
-
-  /**
-   * Check in the form is dirty
-   * @returns An bool if user want leave the page.
-   */
-  canDeactivate(form: CanFormDeactivate): Observable<boolean> | Promise<boolean> | boolean {
-    return form.canDeactivate ? form.canDeactivate() : true;
-  }
+	/**
+	 * Check in the form is dirty
+	 * @returns An bool if user want leave the page.
+	 */
+	canDeactivate(
+		form: CanFormDeactivate,
+	): Observable<boolean> | Promise<boolean> | boolean {
+		return form.canDeactivate ? form.canDeactivate() : true;
+	}
 }

@@ -1,7 +1,5 @@
 import type { Routes } from "@angular/router";
 import { routes as expenseRoutes } from "./expense/expense.routes";
-import { routes as authRoutes } from "./auth/auth.routes";
-import { canMatchGuard } from "./auth/can-match.guard";
 
 export const routes: Routes = [
 	{

@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
-import { LocalstorageService } from "../localstorage/localstorage.service";
 import { Router } from "@angular/router";
+import { LocalstorageService } from "../localstorage/localstorage.service";
 
 @Component({
 	selector: "app-auth",

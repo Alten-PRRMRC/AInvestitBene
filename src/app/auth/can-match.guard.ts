@@ -1,8 +1,8 @@
 // Import required modules
 import { Injectable } from "@angular/core";
-import type { CanMatch } from "@angular/router";
+import { CanMatch } from "@angular/router";
+import { Observable } from "rxjs";
 import { LocalstorageService } from "../localstorage/localstorage.service";
-import type { Observable } from "rxjs";
 
 /**
  * Guard responsible to check if the user is already logged in.

@@ -1,15 +1,16 @@
 // Import required modules
-import { Component, inject, OnInit } from "@angular/core";
+
 import { CommonModule } from "@angular/common";
+import { Component, inject, OnInit } from "@angular/core";
 import {
 	FormControl,
 	FormGroup,
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { ExpenseService } from "../expense.service";
-import { Expense, ExpenseCategory } from "../expense.model";
 import { Router } from "@angular/router";
+import { Expense, ExpenseCategory } from "../expense.model";
+import { ExpenseService } from "../expense.service";
 
 /**
  * Component provides a reactive form for creating new expense entries.

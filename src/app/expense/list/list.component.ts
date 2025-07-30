@@ -1,10 +1,11 @@
 // Import required modules
-import { Component, inject, type OnInit } from "@angular/core";
+
 import { CommonModule } from "@angular/common";
+import { Component, inject, OnInit } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { ExpenseService } from "../expense.service";
-import { Expense } from "../expense.model";
 import { Observable } from "rxjs";
+import { Expense } from "../expense.model";
+import { ExpenseService } from "../expense.service";
 
 /**
  * Component that shows a table of users transactions
