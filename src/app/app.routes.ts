@@ -1,5 +1,6 @@
 import type { Routes } from "@angular/router";
 import { routes as expenseRoutes } from "./expense/expense.routes";
+import { routes as authRoutes } from "./auth/auth.routes";
 import { canMatchGuard } from "./auth/can-match.guard";
 
 export const routes: Routes = [
@@ -8,13 +9,7 @@ export const routes: Routes = [
 		loadComponent: () =>
 			import("./expense/expense.component").then((m) => m.ExpenseComponent),
 		children: expenseRoutes,
-		canMatch: [canMatchGuard],
 		title: "Expense List",
-	},
-	{
-		path: "",
-		loadComponent: () =>
-			import("./auth/auth.component").then((m) => m.AuthComponent),
 	},
 	{
 		path: "**",
