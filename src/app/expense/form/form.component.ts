@@ -1,11 +1,115 @@
-import { Component } from '@angular/core';
+// Import required modules
+import { Component, inject, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from "@angular/forms";
+import { ExpenseService } from "../expense.service";
+import { Expense, ExpenseCategory } from "../expense.model";
+import { Router } from "@angular/router";
 
+/**
+ * Component provides a reactive form for creating new expense entries.
+ */
 @Component({
-  selector: 'expense-form',
-  imports: [],
-  templateUrl: './form.component.html',
-  styleUrl: './form.component.css'
+	selector: "expense-form",
+	imports: [CommonModule, ReactiveFormsModule],
+	templateUrl: "./form.component.html",
+	styleUrl: "./form.component.css",
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
+	/**
+	 * Service for managing expense data
+	 * @private
+	 */
+	private expenseService: ExpenseService = inject(ExpenseService);
 
+	/**
+	 * Router for navigation after form submission
+	 * @private
+	 */
+	private router: Router = inject(Router);
+
+	/**
+	 * Available expense categories for the dropdown selection
+	 */
+	categories: ExpenseCategory[] = ["fashion", "groceries"];
+
+	/**
+	 * Flag indicating whether the form has unsaved changes
+	 * Used by the canDeactivate guard to prevent accidental navigation
+	 */
+	formDirty = false;
+
+	/**
+	 * The reactive form group that contains all form controls:
+	 * - Description: Required, minimum 3 characters
+	 * - Import: Required, minimum value of 1
+	 * - Category: Required, defaults to first element of ExpenseCategory
+	 * - Data: Required, defaults to current date
+	 * @see ExpenseCategory
+	 */
+	expenseForm: FormGroup = new FormGroup({
+		description: new FormControl("", [
+			Validators.required,
+			Validators.minLength(3),
+		]),
+		import: new FormControl(1, [Validators.required, Validators.min(1)]),
+		category: new FormControl(this.categories[0], [Validators.required]),
+		data: new FormControl(new Date(), [Validators.required]),
+	});
+
+	ngOnInit(): void {
+		// Track form changes to set formDirty flag for the canDeactivate guard
+		this.expenseForm.valueChanges.subscribe(() => {
+			this.formDirty = this.expenseForm.dirty;
+		});
+	}
+
+	/**
+	 * Handles form submission when the user clicks the Save button
+	 *
+	 * If the form is valid:
+	 * 1. Creates a new Expense object with the form values
+	 * 2. Adds the expense to the ExpenseService
+	 * 3. Resets the form dirty state
+	 * 4. Navigates back to the home page
+	 */
+	onSubmit(): void {
+		if (this.expenseForm.valid) {
+			const newExpense: Expense = {
+				id: Date.now().toString(), // Simple ID generation using timestamp
+				...this.expenseForm.value,
+			};
+
+			this.expenseService.addItem(newExpense);
+			this.formDirty = false;
+			this.router.navigate(["/"]);
+		}
+	}
+
+	/**
+	 * Resets the form to its initial state
+	 *
+	 * This clears all user input and validation errors, and sets:
+	 * - Description: empty string
+	 * - Import: 1
+	 * - Category: to first element of ExpenseCategory
+	 * - Data: current date
+	 *
+	 * Resets the formDirty flag to prevent the deactivation guard from triggering
+	 * @see ExpenseCategory
+	 */
+	resetForm(): void {
+		this.expenseForm.reset({
+			description: "",
+			import: 1,
+			category: this.categories[0],
+			data: new Date(),
+		});
+		this.formDirty = false;
+	}
 }

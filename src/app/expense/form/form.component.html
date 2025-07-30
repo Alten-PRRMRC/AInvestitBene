@@ -1,1 +1,75 @@
-<p>form works!</p>
+<section class="expense-form-container">
+  <h2>Add New Expense</h2>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+    <section class="form-group">
+      <label for="description">Description</label>
+      <input
+        type="text"
+        id="description"
+        formControlName="description"
+        placeholder="Enter expense description">
+      @if(expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched) {
+        <section class="error">
+          @if(expenseForm.get('description')?.errors?.['required']) {
+            <span>Description is required</span>
+          }
+          @if(expenseForm.get('description')?.errors?.['minlength']) {
+            <span>Description must be at least 3 characters</span>
+          }
+        </section>
+      }
+    </section>
+
+    <section class="form-group">
+      <label for="import">Amount</label>
+      <input
+        type="number"
+        id="import"
+        formControlName="import"
+        min="1"
+        step="1">
+      @if(expenseForm.get('import')?.invalid && expenseForm.get('import')?.touched) {
+        <section class="error">
+          @if(expenseForm.get('import')?.errors?.['required']) {
+            <span>Amount is required</span>
+          }
+          @if(expenseForm.get('import')?.errors?.['min']) {
+            <span>Amount must be positive</span>
+          }
+        </section>
+      }
+    </section>
+
+    <section class="form-group">
+      <label for="category">Category</label>
+      <select id="category" formControlName="category">
+        @for(category of categories; track category) {
+          <option [value]="category">
+            {{ category | titlecase }}
+          </option>
+        }
+      </select>
+    </section>
+
+    <section class="form-group">
+      <label for="data">Date</label>
+      <input
+        type="date"
+        id="data"
+        formControlName="data">
+      @if(expenseForm.get('data')?.invalid && expenseForm.get('data')?.touched) {
+        <div class="error">
+          @if(expenseForm.get('data')?.errors?.['required']) {
+            <span>Date is required</span>
+          }
+        </div>
+      }
+    </section>
+
+    <section class="form-actions">
+      <button type="submit" [disabled]="expenseForm.invalid">Save Expense</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </section>
+  </form>
+</section>
