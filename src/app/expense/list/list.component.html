@@ -1,1 +1,38 @@
-<p>list works!</p>
+<section class="expense-container">
+  <h2>Expense List</h2>
+
+  <section class="add-button-container">
+    <a routerLink="/add" class="add-button">Add New Expense</a>
+  </section>
+
+  @if((expenses$ | async)?.length === 0){
+    <section class="no-expenses">
+      <p>No expenses found. Click the button above to add your first expense.</p>
+    </section>
+  } @else {
+    <section class="expense-list">
+      <table>
+        <thead>
+        <tr>
+          @for(title of titleTable; track titleTable){
+            <th>{{ title }}</th>
+          }
+        </tr>
+        </thead>
+        <tbody>
+          @for(expense of expenses$ | async; track expenses$){
+            <tr>
+              <td>{{ expense.description }}</td>
+              <td>{{ expense.import | currency:'EUR' }}</td>
+              <td>{{ expense.category | titlecase }}</td>
+              <td>{{ expense.data | date }}</td>
+              <td>
+                <button class="delete-button" (click)="deleteExpense(expense.id)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+</section>
