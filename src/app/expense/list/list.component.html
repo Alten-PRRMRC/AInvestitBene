@@ -24,7 +24,7 @@
             <tr>
               <td>{{ expense.description }}</td>
               <td>{{ expense.import | currency:'EUR' }}</td>
-              <td>{{ expense.category | titlecase }}</td>
+              <td [innerHTML]="expense.category | titlecase | category"></td>
               <td>{{ expense.data | date }}</td>
               <td>
                 <button class="delete-button" (click)="deleteExpense(expense.id)">Delete</button>

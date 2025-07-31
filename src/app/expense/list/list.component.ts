@@ -6,13 +6,14 @@ import { RouterLink } from "@angular/router";
 import { Observable } from "rxjs";
 import { Expense } from "../expense.model";
 import { ExpenseService } from "../expense.service";
+import { CategoryPipe } from "./category.pipe";
 
 /**
  * Component that shows a table of users transactions
  */
 @Component({
 	selector: "expense-list",
-	imports: [CommonModule, RouterLink],
+	imports: [CommonModule, RouterLink, CategoryPipe],
 	templateUrl: "./list.component.html",
 	styleUrl: "./list.component.css",
 })
