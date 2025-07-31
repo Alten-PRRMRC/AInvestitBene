@@ -17,4 +17,4 @@ export interface Expense {
 /**
  * Defines the available categories for expense classification.
  */
-export type ExpenseCategory = "fashion" | "groceries";
+export type ExpenseCategory = "fashion" | "groceries" | "cryptocurrency";

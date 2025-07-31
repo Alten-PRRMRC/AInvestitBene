@@ -37,7 +37,7 @@ export class FormComponent implements OnInit {
 	/**
 	 * Available expense categories for the dropdown selection
 	 */
-	categories: ExpenseCategory[] = ["fashion", "groceries"];
+	categories: ExpenseCategory[] = ["fashion", "groceries", "cryptocurrency"];
 
 	/**
 	 * Flag indicating whether the form has unsaved changes
