@@ -8,7 +8,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { Expense, ExpenseCategory } from "../expense.model";
 import { ExpenseService } from "../expense.service";
 
@@ -17,7 +17,7 @@ import { ExpenseService } from "../expense.service";
  */
 @Component({
 	selector: "expense-form",
-	imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
 	templateUrl: "./form.component.html",
 	styleUrl: "./form.component.css",
 })

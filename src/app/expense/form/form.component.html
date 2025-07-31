@@ -1,5 +1,9 @@
 <section class="expense-form-container">
-  <h2>Add New Expense</h2>
+  <section class="form-title-container">
+    <span></span>
+    <h2>Add New Expense</h2>
+    <a [routerLink]="['/']">X</a>
+  </section>
 
   <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
     <section class="form-group">

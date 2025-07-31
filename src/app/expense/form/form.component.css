@@ -7,14 +7,24 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-form {
-	padding: 40px;
+.form-title-container {
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: space-between;
 }
 
-h2 {
-	color: #333;
-	margin-bottom: 20px;
-	text-align: center;
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+form {
+	padding: 40px;
 }
 
 .form-group {
