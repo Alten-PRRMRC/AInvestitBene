@@ -18,7 +18,7 @@ export class ExpenseComponent {
 	 * Signal containing the application title
 	 * @protected
 	 */
-	protected readonly title: WritableSignal<string> = signal("AInvestBene");
+	protected readonly title: WritableSignal<string> = signal("AInvestitBene");
 	/**
 	 * Signal containing the application description
 	 * @protected
