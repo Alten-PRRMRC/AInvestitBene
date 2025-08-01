@@ -50,7 +50,7 @@ export class FormComponent implements OnInit {
 	 * - Description: Required, minimum 3 characters
 	 * - Import: Required, minimum value of 1
 	 * - Category: Required, defaults to first element of ExpenseCategory
-	 * - Data: Required, defaults to current date
+	 * - Date: Required, defaults to current date
 	 * @see ExpenseCategory
 	 */
 	expenseForm: FormGroup = new FormGroup({
@@ -60,7 +60,7 @@ export class FormComponent implements OnInit {
 		]),
 		import: new FormControl(1, [Validators.required, Validators.min(1)]),
 		category: new FormControl(this.categories[0], [Validators.required]),
-		data: new FormControl(new Date(), [Validators.required]),
+		date: new FormControl(new Date(), [Validators.required]),
 	});
 
 	ngOnInit(): void {
@@ -85,6 +85,7 @@ export class FormComponent implements OnInit {
 				id: Date.now().toString(), // Simple ID generation using timestamp
 				...this.expenseForm.value,
 			};
+      newExpense.date = new Date(newExpense.date);
 
 			this.expenseService.addItem(newExpense);
 			this.formDirty = false;
@@ -99,7 +100,7 @@ export class FormComponent implements OnInit {
 	 * - Description: empty string
 	 * - Import: 1
 	 * - Category: to first element of ExpenseCategory
-	 * - Data: current date
+	 * - Date: current date
 	 *
 	 * Resets the formDirty flag to prevent the deactivation guard from triggering
 	 * @see ExpenseCategory
@@ -109,7 +110,7 @@ export class FormComponent implements OnInit {
 			description: "",
 			import: 1,
 			category: this.categories[0],
-			data: new Date(),
+			date: new Date(),
 		});
 		this.formDirty = false;
 	}

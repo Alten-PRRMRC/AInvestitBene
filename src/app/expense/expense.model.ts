@@ -11,7 +11,7 @@ export interface Expense {
 	/** Category classification of the expense */
 	category: ExpenseCategory;
 	/** Date when the expense occurred */
-	data: Date;
+	date: Date;
 }
 
 /**

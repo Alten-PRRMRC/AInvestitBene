@@ -57,14 +57,14 @@
     </section>
 
     <section class="form-group">
-      <label for="data">Date</label>
+      <label for="date">Date</label>
       <input
         type="date"
-        id="data"
-        formControlName="data">
-      @if(expenseForm.get('data')?.invalid && expenseForm.get('data')?.touched) {
+        id="date"
+        formControlName="date">
+      @if(expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched) {
         <div class="error">
-          @if(expenseForm.get('data')?.errors?.['required']) {
+          @if(expenseForm.get('date')?.errors?.['required']) {
             <span>Date is required</span>
           }
         </div>
