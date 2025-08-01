@@ -5,35 +5,40 @@
     <a routerLink="/add" class="add-button">Add New Expense</a>
   </section>
 
-  @if((expenses$ | async)?.length === 0){
+  @let arrExpense = expenses$ | async;
+  @let arrExpenseKey = expensesKey$ | async;
+  @if(arrExpense && Object.keys(arrExpense).length > 0){
+    <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
+    @for(key of arrExpenseKey; track key){
+      <h2>{{key}}</h2>
+      <section class="expense-list">
+        <table>
+          <thead>
+          <tr>
+            @for(title of titleTable; track titleTable){
+              <th>{{ title }}</th>
+            }
+          </tr>
+          </thead>
+          <tbody>
+            @for(expense of arrExpense[key]; track expense.id){
+              <tr>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.import | currency:'EUR' }}</td>
+                <td [innerHTML]="expense.category | titlecase | category"></td>
+                <td>{{ expense.date | date }}</td>
+                <td>
+                  <button class="delete-button" (click)="deleteExpense(expense.id)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </section>
+    }
+  } @else {
     <section class="no-expenses">
       <p>No expenses found. Click the button above to add your first expense.</p>
-    </section>
-  } @else {
-    <section class="expense-list">
-      <table>
-        <thead>
-        <tr>
-          @for(title of titleTable; track titleTable){
-            <th>{{ title }}</th>
-          }
-        </tr>
-        </thead>
-        <tbody>
-          @for(expense of expenses$ | async; track expenses$){
-            <tr>
-              <td>{{ expense.description }}</td>
-              <td>{{ expense.import | currency:'EUR' }}</td>
-              <td [innerHTML]="expense.category | titlecase | category"></td>
-              <td>{{ expense.data | date }}</td>
-              <td>
-                <button class="delete-button" (click)="deleteExpense(expense.id)">Delete</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
     </section>
   }
 </section>
