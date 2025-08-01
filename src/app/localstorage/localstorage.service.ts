@@ -43,11 +43,8 @@ export class LocalstorageService {
 
 			// Parse the JSON string back to an object
 			const parsedData = JSON.parse(item, (key, value) => {
-				if (
-					typeof value === "string" &&
-					/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.*Z$/.test(value)
-				) {
-					return new Date(value);
+				if (Object.prototype.hasOwnProperty.call(value, 'data')) {
+					value.data = new Date(value.data);
 				}
 				return value;
 			});
