@@ -63,11 +63,11 @@ export class ExpenseService implements OnDestroy {
 	}
 
 	/**
-	 * Retrieves the current list of expense items as an Observable.
-	 * @returns An Observable of the expense items array
+	 * Retrieves the current list of expense items as BehaviorSubject.
+	 * @returns A BehaviorSubject of the expense items array
 	 */
-	getItems(): Observable<Expense[]> {
-		return this.expenseList$.asObservable();
+	getItems(): BehaviorSubject<Expense[]> {
+		return this.expenseList$;
 	}
 
 	/**

@@ -5,7 +5,7 @@ import { Component, signal, WritableSignal } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 
 /**
- * This component serves as container as a homepage
+ * This component serves as homepage, containers of his component
  */
 @Component({
 	selector: "app-expense",
