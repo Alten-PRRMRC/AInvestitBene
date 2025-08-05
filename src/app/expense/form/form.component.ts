@@ -3,10 +3,11 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import {
-	FormControl,
-	FormGroup,
-	ReactiveFormsModule,
-	Validators,
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule, ValidationErrors,
+  Validators,
 } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { Expense, ExpenseCategory } from "../expense.model";
@@ -45,6 +46,15 @@ export class FormComponent implements OnInit {
 	 */
 	formDirty = false;
 
+  /**
+   * Form validator check if field value is only whitespaces.
+   * @param control
+   */
+  noWhitespaceValidator(control: AbstractControl): ValidationErrors | null {
+    return control.value.trim().length === 0 ?
+      {noWhitespace: true} : null
+  }
+
 	/**
 	 * The reactive form group that contains all form controls:
 	 * - Description: Required, minimum 3 characters
@@ -57,6 +67,7 @@ export class FormComponent implements OnInit {
 		description: new FormControl("", [
 			Validators.required,
 			Validators.minLength(3),
+      this.noWhitespaceValidator
 		]),
 		import: new FormControl(1, [Validators.required, Validators.min(1)]),
 		category: new FormControl(this.categories[0], [Validators.required]),

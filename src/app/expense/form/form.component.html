@@ -13,12 +13,16 @@
         id="description"
         formControlName="description"
         placeholder="Enter expense description">
-      @if(expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched) {
+      @let description = expenseForm.get('description');
+      @if(description?.invalid && description?.touched) {
         <section class="error">
-          @if(expenseForm.get('description')?.errors?.['required']) {
+          @if(description?.errors?.['required'] ||
+              description?.errors?.['noWhitespace']
+            ) {
             <span>Description is required</span>
           }
-          @if(expenseForm.get('description')?.errors?.['minlength']) {
+          @if(description?.errors?.['minlength'] &&
+          !description?.errors?.['noWhitespace']) {
             <span>Description must be at least 3 characters</span>
           }
         </section>
@@ -33,12 +37,13 @@
         formControlName="import"
         min="1"
         step="1">
-      @if(expenseForm.get('import')?.invalid && expenseForm.get('import')?.touched) {
+      @let import = expenseForm.get('import');
+      @if(import?.invalid && import?.touched) {
         <section class="error">
-          @if(expenseForm.get('import')?.errors?.['required']) {
+          @if(import?.errors?.['required']) {
             <span>Amount is required</span>
           }
-          @if(expenseForm.get('import')?.errors?.['min']) {
+          @if(import?.errors?.['min']) {
             <span>Amount must be positive</span>
           }
         </section>
@@ -62,9 +67,10 @@
         type="date"
         id="date"
         formControlName="date">
-      @if(expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched) {
+      @let date = expenseForm.get('date');
+      @if(date?.invalid && date?.touched) {
         <div class="error">
-          @if(expenseForm.get('date')?.errors?.['required']) {
+          @if(date?.errors?.['required']) {
             <span>Date is required</span>
           }
         </div>
