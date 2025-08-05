@@ -1,5 +1,5 @@
 // Import required modules
-import { Component, output, OutputEmitterRef } from '@angular/core';
+import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
 
 /**
  * Component that show a search field.
@@ -19,9 +19,19 @@ export class ListSearchComponent {
   searchChange: OutputEmitterRef<string> = output<string>();
 
   /**
+   * Option if the query value emitted need to be case-sensitive.
+   * Default is case-sensitive.
+   */
+  caseSensitive: InputSignal<boolean> = input<boolean>(true);
+
+  /**
    * Method that emit to the parent component the query value of the search field
    */
   onSearchUpdate(query: string): void{
+    if(this.caseSensitive()){
       this.searchChange.emit(query);
+    } else {
+      this.searchChange.emit(query.toLowerCase().replace(/\s/g, ""));
+    }
   }
 }
