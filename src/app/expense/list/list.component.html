@@ -25,7 +25,7 @@
             @for(expense of arrExpense[key]; track expense.id){
               <tr>
                 <td>{{ expense.description }}</td>
-                <td>{{ expense.import | currency:'EUR' }}</td>
+                <td appAppHighlightBig [limitImport]="500">{{ expense.import | currency:'EUR' }}</td>
                 <td [innerHTML]="expense.category | titlecase | category"></td>
                 <td>{{ expense.date | date }}</td>
                 <td>

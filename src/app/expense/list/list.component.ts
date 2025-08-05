@@ -10,13 +10,14 @@ import { CategoryPipe } from "./category.pipe";
 import { ListSwitchComponent } from './switch/list-switch.component';
 import { Dict as DictExpense } from './dict.model';
 import { ListSearchComponent } from './search-field/list-search.component';
+import { AppHighlightBig } from '../../app/expense/list/app-highlight-big';
 
 /**
  * Component that shows a table of users transactions
  */
 @Component({
   selector: "expense-list",
-  imports: [CommonModule, RouterLink, CategoryPipe, ListSwitchComponent, ListSearchComponent],
+  imports: [CommonModule, RouterLink, CategoryPipe, ListSwitchComponent, ListSearchComponent, AppHighlightBig],
   templateUrl: "./list.component.html",
   styleUrl: "./list.component.css",
 })
