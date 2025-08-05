@@ -8,6 +8,7 @@
   @let arrExpense = expenses$ | async;
   @let arrExpenseKey = expensesKey$ | async;
   @if(arrExpense && Object.keys(arrExpense).length > 0){
+    <list-search (searchChange)="onSearchUpdate($event)" [caseSensitive]="false"></list-search>
     <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
     @for(key of arrExpenseKey; track key){
       <h2>{{key}}</h2>

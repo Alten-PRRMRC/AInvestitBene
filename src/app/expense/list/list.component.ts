@@ -9,13 +9,14 @@ import { ExpenseService } from "../expense.service";
 import { CategoryPipe } from "./category.pipe";
 import { ListSwitchComponent } from './switch/list-switch.component';
 import { Dict as DictExpense } from './dict.model';
+import { ListSearchComponent } from './search-field/list-search.component';
 
 /**
  * Component that shows a table of users transactions
  */
 @Component({
   selector: "expense-list",
-  imports: [CommonModule, RouterLink, CategoryPipe, ListSwitchComponent],
+  imports: [CommonModule, RouterLink, CategoryPipe, ListSwitchComponent, ListSearchComponent],
   templateUrl: "./list.component.html",
   styleUrl: "./list.component.css",
 })
@@ -31,7 +32,7 @@ export class ListComponent implements OnInit {
   protected readonly Object = Object; // Used to check if expenses$ is not a dict empty
 
   /**
-   * BehaviorSubject that stores and emits checkbox values from ListSwitchComponent.
+   * BehaviorSubject that stores checkbox values from ListSwitchComponent.
    * If is true is annually, false is monthly
    * @see ListSwitchComponent
    */
@@ -56,11 +57,34 @@ export class ListComponent implements OnInit {
    */
   expensesKey$!: Observable<string[]>;
 
+  /**
+   * BehaviorSubject that stores search field values from ListSearchComponent.
+   * @see ListSearchComponent
+   */
+  searchQuery$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   ngOnInit(): void {
+    let expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.getItems();
+    let filteredExpenses$: Observable<Expense[]> = combineLatest([ // Create a new observable filtered combining
+        this.searchQuery$, // An BehaviorSubject of string from the list-search component.
+        expenseItems$,  // An BehaviorSubject of Expense from ExpenseService
+      ]).pipe( // Each element of this Observable will be
+        map(([query, expenses]: [string, Expense[]]): Expense[] => { // filtered based on description of Expense.
+          if (query.length === 0) { // If query is empty, return all expenses
+            return expenses
+          }
+          // Filter Expense based on description like query, both not case-sensitive.
+          let filtered: Expense[] = expenses.filter((e: Expense): boolean =>
+              e.description.toLowerCase().replace(/\s/g, "").includes(query)
+            );
+          return filtered.length === 0 ? expenses : filtered; // Return filtered or original expenses if none match
+        })
+    );
+
     this.expenses$ = combineLatest([ // To create a new observable dictionary we combine the follow observables.
-      this.expenseService.getItems(), // An observable of Expense from the expense service.
-      this.checkboxValue$.asObservable()] // An observable of booleans from the list-switch checkbox.
-    ).pipe( // Each element of this observable will be
+      filteredExpenses$, // An Observable of filtered Expense list.
+      this.checkboxValue$ // An BehaviorSubject of booleans from the list-switch checkbox.
+      ]).pipe( // Each element of this observable will be
       map(([expenses, checkbox]: [Expense[], boolean]): DictExpense<Expense[]> => { // transformed in a dictionary.
         const obj: DictExpense<Expense[]> = {}; // Initialize an empty dictionary.
         for(let i: number = 0; i < expenses.length; i++) { // For each Expense[] items
@@ -75,6 +99,7 @@ export class ListComponent implements OnInit {
         return obj; // Return populated Expense's dictionary
       }),
     );
+
     // Now, we need an observable dictionary keys of observable Expense's dictionary to determinate the order to show it.
     this.expensesKey$ = this.expenses$.pipe( // Each element of Expense's dictionary will be
       map((obj: DictExpense<Expense[]>): string[] => { // transformed in a dictionary keys.
@@ -104,5 +129,15 @@ export class ListComponent implements OnInit {
    */
   onCheckboxChange(value: boolean): void {
     this.checkboxValue$.next(value);
+  }
+
+  /**
+   * Change the value of the searchQuery$ to the current value of the search field
+   * @param value - String, query user's input
+   * @see ListSearchComponent
+   * @see searchQuery$
+   */
+  onSearchUpdate(query: string): void{
+    this.searchQuery$.next(query);
   }
 }
