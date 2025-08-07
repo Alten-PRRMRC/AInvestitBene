@@ -81,3 +81,11 @@ tr:hover {
 .delete-button:hover {
 	background-color: #c0392b;
 }
+
+tr {
+  width: 100%;
+}
+
+td {
+  width: 20%;
+}
