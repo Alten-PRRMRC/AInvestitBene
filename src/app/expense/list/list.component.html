@@ -19,6 +19,7 @@
             @for(title of titleTable; track titleTable){
               <th>{{ title }}</th>
             }
+            <th><a class="delete-button" (click)="clearAll()" routerLink="/">🗑️</a></th>
           </tr>
           </thead>
           <tbody>

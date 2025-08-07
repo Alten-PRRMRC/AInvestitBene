@@ -47,8 +47,10 @@ export class ExpenseService implements OnDestroy {
 	 * Ensures any pending operations are completed.
 	 */
 	ngOnDestroy(): void {
+    this.localStorageService.clear();
 		this.expenseList$.complete();
-	}
+    this.expenseList$ = new BehaviorSubject<Expense[]>([]);
+  }
 
 	/**
 	 * Adds a new expense item to the expense list and persists to localStorage.

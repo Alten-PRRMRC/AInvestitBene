@@ -46,7 +46,7 @@ export class ListComponent implements OnInit {
    * List of table title based on Expense
    * @see Expense
    */
-  titleTable: string[] = ["Description", "Amount", "Category", "Date", ""];
+  titleTable: string[] = ["Description", "Amount", "Category", "Date"];
 
   /**
    * Observable of a dictionary Expense
@@ -88,6 +88,14 @@ export class ListComponent implements OnInit {
    */
   deleteExpense(id: string): void {
     this.expenseService.deleteItem(id);
+  }
+
+  /**
+   * Clear localstorage and destroy ExpenseService
+   * @see ExpenseService
+   */
+  clearAll(): void {
+    this.expenseService.ngOnDestroy()
   }
 
   /**
