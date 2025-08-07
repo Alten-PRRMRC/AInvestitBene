@@ -20,6 +20,12 @@ import { Expense } from '../expense.model';
   styleUrl: './stats.component.css'
 })
 export class StatsComponent implements OnInit {
+
+  /** Used to check if expensesTotal$ is not a dict empty
+   * @protected
+   */
+  protected readonly Object = Object;
+
   /**
    * Initialized injecting ListService service
    * @protected

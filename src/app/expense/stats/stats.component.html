@@ -2,7 +2,7 @@
   <h2>{{ subtitle() }}</h2>
   @let arrExpense = this.expensesTotal$ | async;
   @let arrExpenseKey = this.expensesKey$ | async;
-  @if(arrExpense && arrExpenseKey){
+  @if(arrExpense && Object.keys(arrExpense).length > 0){
 <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
   <section class="stats-list-container">
   <section class="stats-list">
@@ -23,6 +23,8 @@
   </section>
   </section>
   } @else {
-    <p>No expenses found.</p>
+    <section class="no-expenses">
+      <p>No expenses found.
+    </section>
   }
 </section>
