@@ -1,1 +1,28 @@
-<p>stats works!</p>
+<section class="stats-container">
+  <h2>{{ subtitle() }}</h2>
+  @let arrExpense = this.expensesTotal$ | async;
+  @let arrExpenseKey = this.expensesKey$ | async;
+  @if(arrExpense && arrExpenseKey){
+<list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
+  <section class="stats-list-container">
+  <section class="stats-list">
+    <table>
+      <thead>
+      <tr><th colspan=2>Total of</th></tr>
+      </thead>
+      <tbody>
+    @for(key of arrExpenseKey; track key){
+      <tr>
+        <td><b>{{ key }}</b></td>
+        <td><p appAppHighlightBig>{{ arrExpense[key] | currency:'EUR' }}</p></td>
+      <p>
+      </tr>
+    }
+      </tbody>
+    </table>
+  </section>
+  </section>
+  } @else {
+    <p>No expenses found.</p>
+  }
+</section>

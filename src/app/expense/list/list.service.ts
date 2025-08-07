@@ -80,7 +80,7 @@ export class ListService {
    * @see Expense
    * @see ListSwitchComponent
    */
-  getTotal$(groupedExpenses$: Observable<DictExpense<Expense[]>>): Observable<Dict<number>> {
+  getExpensesTotalImport$(groupedExpenses$: Observable<DictExpense<Expense[]>>): Observable<Dict<number>> {
     return groupedExpenses$.pipe(
       map((groupedExpenses: Dict<Expense[]>): Dict<number> => {
         const totals: Dict<number> = {};
