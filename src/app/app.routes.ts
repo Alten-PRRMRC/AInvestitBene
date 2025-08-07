@@ -9,6 +9,12 @@ export const routes: Routes = [
 		children: expenseRoutes,
 		title: "Expense List",
 	},
+  {
+    path: "about",
+    loadComponent: () =>
+      import("./about/about.component").then((m) => m.AboutComponent),
+    title: "About",
+  },
 	{
 		path: "**",
 		loadComponent: () =>
