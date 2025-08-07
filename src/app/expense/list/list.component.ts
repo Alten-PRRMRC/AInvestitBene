@@ -10,7 +10,7 @@ import { CategoryPipe } from "./category.pipe";
 import { ListSwitchComponent } from './switch/list-switch.component';
 import { Dict as DictExpense } from './dict.model';
 import { ListSearchComponent } from './search-field/list-search.component';
-import { AppHighlightBig } from '../../app/expense/list/app-highlight-big';
+import { AppHighlightBig } from '../list/app-highlight-big';
 
 /**
  * Component that shows a table of users transactions
