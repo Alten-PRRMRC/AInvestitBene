@@ -1,24 +1,40 @@
-<section>
-<h1>AInvestitBene<span>*</span></h1>
-  <article>
-<h2>(/ˈeɪˈiːvɛstθɛtbɛɛn/)</h2>
-    <p>
-<span>*</span>It's a macaroni word, joking in Bari dialectic phrase "(You've) got a good investment".
-    </p>
-  </article>
-  <article>
-    <h2>Note about me:</h2>
-    <p>If this project has caught your interest, you can find the source code, along with documentation and conventional
-      Git commit history, <a href="https://github.com/Alten-PRRMRC/AInvestitBene">here</a>.</p>
-  </article>
-  <article>
-    <h3>Note known bug:</h3>
-    <p>
-      If you don't see the list when creating a new expense, it may be due to a local storage issue caused by the
-      changes I've made
-      <a href="https://github.com/Alten-PRRMRC/AInvestitBene/commit/3128fce49d4ea5895168ccd93503dfa773da7c1b">here</a>
-    </p>
-    <p>Solution:</p>
-    <a routerLink="/" (click)=reset()><button>Reset local storage</button></a>
-  </article>
+<section class="hero bg-neutral min-h-screen text-neutral-content">
+  <section class="hero-content text-left">
+    <section class="max-w-md">
+      <h1 class="text-5xl font-bold">
+        AInvestitBene<span class="text-primary">*</span>
+      </h1>
+
+      <article class="mt-4">
+        <h2 class="text-3xl text-secondary italic">(/ˈeɪˈiːvɛstθɛtbɛɛn/)</h2>
+        <p class="py-4 text-base">
+          <span class="text-primary">*</span>It's a macaroni word, joking in Bari dialectic phrase: "(You've) got a
+          good investment".
+        </p>
+      </article>
+
+      <article class="mt-6">
+        <h2 class="text-3xl">Note about me:</h2>
+        <p class="py-4 text-base">
+          If this project has caught your interest, you can find the source code, along with documentation and
+          conventional Git commit history,
+          <a class="link link-primary" href="https://github.com/Alten-PRRMRC/AInvestitBene">here</a>.
+        </p>
+      </article>
+
+      <article class="mt-6 bg-warning text-warning-content p-4 rounded-box">
+        <h3 class="text-2xl font-semibold">Known Bug:</h3>
+        <p class="py-4 text-base">
+          If you don't see the list when creating a new expense, it may be due to a local storage issue caused by the
+          changes I've made
+          <a class="link link-warning text-warning-content"
+             href="https://github.com/Alten-PRRMRC/AInvestitBene/commit/3128fce49d4ea5895168ccd93503dfa773da7c1b">here</a>.
+        </p>
+        <p class="py-2 font-medium">Solution:</p>
+        <a routerLink="/" (click)="reset()">
+          <button class="btn btn-error">Reset local storage</button>
+        </a>
+      </article>
+    </section>
+  </section>
 </section>
