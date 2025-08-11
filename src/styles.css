@@ -7,14 +7,22 @@
 }
 
 * {
-	font-family: "Roboto", sans-serif;
-	font-style: normal;
-	font-variation-settings: "wdth" 100;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+html {
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
 }
 
 .highlighted-category {
-	background-color: #ff7300;
-	color: #fff;
-	padding: 8px;
-	border-radius: 24px;
+  background-color: #ff7300;
+  color: #fff;
+  padding: 8px;
+  border-radius: 24px;
 }
