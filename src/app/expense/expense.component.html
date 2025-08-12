@@ -1,5 +1,9 @@
-<section>
-  <h1>{{ title() }}</h1>
-  <p>{{ description() }}</p>
-  <router-outlet></router-outlet>
+<section [class.hero]="isAuthenticated" class="min-h-screen text-base-content">
+  <section [class.hero-content]="isAuthenticated" class="text-center">
+    <section [class.max-w-md]="isAuthenticated">
+      <h1 class="text-[5vh] font-bold uppercase " aria-label="Page Title">{{ title() }}</h1>
+      <p class="py-6 text-lg">{{ description() }}</p>
+      <router-outlet></router-outlet>
+    </section>
+  </section>
 </section>
