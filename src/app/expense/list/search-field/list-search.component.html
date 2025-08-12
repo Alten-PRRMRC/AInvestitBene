@@ -1,6 +1,21 @@
-<section class="search-container">
-  <input #searchbar type="text" placeholder="Type any description" (input)="onSearchUpdate(searchbar.value)"/>
-  <section class="lens">
-    <p>🔍</p>
-  </section>
-</section>
+<label class="flex items-center w-full h-[38px] overflow-hidden border rounded-md text-center group" for="searchbar">
+  <input
+    #searchbar
+    class="w-[95%] h-full border-none text-center focus:outline-none"
+    type="text"
+    placeholder="Type any description"
+    (input)="onSearchUpdate(searchbar.value)"
+    aria-label="Search input"
+  />
+  <p class="w-[50px] h-full flex items-center justify-center group-hover:bg-info select-none"><svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    stroke-width="2.5"
+    fill="none"
+    stroke="currentColor"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <path d="m21 21-4.3-4.3"></path>
+  </g>
+  </svg></p>
+</label>
