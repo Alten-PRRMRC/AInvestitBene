@@ -20,10 +20,9 @@ export class AppHighlightBig implements OnDestroy, AfterViewInit {
    */
   private el: ElementRef = inject(ElementRef);
   ngAfterViewInit(): void {
-    let currency: string = this.el.nativeElement.innerHTML.charAt(0)
-    let elImport: string = this.el.nativeElement.innerHTML.substring(1);
-    this.el.nativeElement.innerHTML = Number(elImport) > this.limitImport() ?
-      `<span class="highlighted-category">${currency}${elImport}</span>` :
+    let elImport: string = this.el.nativeElement.innerHTML.substring(1).replace(",", "").split(".");
+    this.el.nativeElement.innerHTML = Number(elImport[0]) > this.limitImport() ?
+      `<b class="badge badge-dash badge-warning bg-warning text-warning-content">${this.el.nativeElement.innerHTML}</b>` :
       this.el.nativeElement.innerHTML;
   }
 
