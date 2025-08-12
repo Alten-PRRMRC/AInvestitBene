@@ -15,7 +15,7 @@ export class CategoryPipe implements PipeTransform {
 	 */
 	transform(value: string): SafeHtml {
 		return value.toLocaleLowerCase() === "cryptocurrency"
-			? `<b class="highlighted-category">${value}</b>`
+			? `<b class="badge badge-dash badge-warning bg-warning text-warning-content">${value}</b>`
 			: value;
 	}
 }
