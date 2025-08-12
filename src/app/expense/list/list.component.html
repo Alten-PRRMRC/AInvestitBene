@@ -1,46 +1,49 @@
-<section class="expense-container">
-  <h2>Expense List</h2>
+<section class="max-w-5xl mx-auto p-5">
+  <h2 class="text-2xl font-bold text-center text-base-content mb-5">Expense List</h2>
 
-  <section class="add-button-container">
-    <a routerLink="/add" class="add-button">Add New Expense</a>
+  <section class="flex justify-end mb-5">
+    <a routerLink="/add" class="btn btn-primary">Add New Expense</a>
   </section>
 
   @let arrExpense = expenses$ | async;
   @let arrExpenseKey = expensesKey$ | async;
+
   @if(arrExpense && Object.keys(arrExpense).length > 0){
     <list-search (searchChange)="onSearchUpdate($event)" [caseSensitive]="false"></list-search>
     <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
+
     @for(key of arrExpenseKey; track key){
-      <h2>{{key}}</h2>
-      <section class="expense-list">
-        <table>
-          <thead>
-          <tr>
-            @for(title of titleTable; track titleTable){
-              <th>{{ title }}</th>
-            }
-            <th><a class="delete-button" (click)="clearAll()" routerLink="/">🗑️</a></th>
-          </tr>
-          </thead>
-          <tbody>
-            @for(expense of arrExpense[key]; track expense.id){
-              <tr>
-                <td>{{ expense.description }}</td>
-                <td appAppHighlightBig [limitImport]="500">{{ expense.import | currency:'EUR' }}</td>
-                <td [innerHTML]="expense.category | titlecase | category"></td>
-                <td>{{ expense.date | date }}</td>
-                <td>
-                  <button class="delete-button" (click)="deleteExpense(expense.id)">Delete</button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
+      <section class="overflow-x-auto">
+      <fieldset class="rounded-box border border-base-300 p-4">
+        <legend class="text-2xl font-bold text-base-content mb-2">{{ key }}</legend>
+          <table class="bg-base-100 table shadow w-full">
+            <thead>
+            <tr>
+              @for(title of titleTable; track titleTable){
+                <th class="text-base-content">{{ title }}</th>
+              }
+            </tr>
+            </thead>
+            <tbody>
+              @for(expense of arrExpense[key]; track expense.id){
+                <tr>
+                  <td class="text-base-content">{{ expense.description }}</td>
+                  <td appAppHighlightBig [limitImport]="500" class="text-base-content">{{ expense.import | currency:'EUR' }}</td>
+                  <td [innerHTML]="expense.category | titlecase | category" class="text-base-content"></td>
+                  <td class="text-base-content">{{ expense.date | date }}</td>
+                  <td>
+                    <button class="btn btn-secondary btn-sm text-white" (click)="deleteExpense(expense.id)">Delete</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+      </fieldset>
       </section>
     }
   } @else {
-    <section class="no-expenses">
-      <p>No expenses found. Click the button above to add your first expense.</p>
+    <section class="bg-info text-center p-8 rounded-lg opacity-80">
+      <p class="text-info-content">No expenses found. Click the button above to add your first expense.</p>
     </section>
   }
 </section>
