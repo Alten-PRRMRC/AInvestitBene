@@ -19,10 +19,3 @@ html {
 body {
   margin: 0;
 }
-
-.highlighted-category {
-  background-color: #ff7300;
-  color: #fff;
-  padding: 8px;
-  border-radius: 24px;
-}
