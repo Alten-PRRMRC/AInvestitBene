@@ -40,7 +40,7 @@ export class StatsComponent implements OnInit {
    */
   protected expenseService: ExpenseService = inject(ExpenseService);
 
-  readonly subtitle: WritableSignal<string> = signal("Stats");
+  readonly subtitle: WritableSignal<string> = signal("Expense List");
 
   /**
    * Observable of dictionary keys
