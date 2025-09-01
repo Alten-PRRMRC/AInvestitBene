@@ -1,6 +1,6 @@
 // Import required modules
 
-import { CommonModule } from "@angular/common";
+import {CommonModule, formatDate} from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import {
   AbstractControl,
@@ -71,7 +71,7 @@ export class FormComponent implements OnInit {
 		]),
 		import: new FormControl(1, [Validators.required, Validators.min(1)]),
 		category: new FormControl(this.categories[0], [Validators.required]),
-		date: new FormControl(new Date(), [Validators.required]),
+		date: new FormControl(formatDate(Date.now(), 'yyyy-MM-dd', 'en'), [Validators.required]),
 	});
 
 	ngOnInit(): void {
@@ -121,7 +121,7 @@ export class FormComponent implements OnInit {
 			description: "",
 			import: 1,
 			category: this.categories[0],
-			date: new Date(),
+			date: formatDate(Date.now(), 'yyyy-MM-dd', 'en'),
 		});
 		this.formDirty = false;
 	}

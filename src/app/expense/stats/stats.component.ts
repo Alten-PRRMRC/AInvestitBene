@@ -3,7 +3,7 @@ import { ListSwitchComponent } from '../list/switch/list-switch.component';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Dict as DictStats } from '../list/dict.model';
 import { AppHighlightBig } from '../list/app-highlight-big';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import {AsyncPipe, CurrencyPipe, TitleCasePipe} from '@angular/common';
 import { ListService } from '../list/list.service';
 import { ExpenseService } from '../expense.service';
 import { Expense } from '../expense.model';
@@ -14,7 +14,8 @@ import { Expense } from '../expense.model';
     ListSwitchComponent,
     AppHighlightBig,
     AsyncPipe,
-    CurrencyPipe
+    CurrencyPipe,
+    TitleCasePipe
   ],
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.css'

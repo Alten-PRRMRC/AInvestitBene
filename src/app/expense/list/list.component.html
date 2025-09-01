@@ -15,7 +15,7 @@
     @for(key of arrExpenseKey; track key){
       <section class="overflow-x-auto">
       <fieldset class="rounded-box border border-base-300 p-4">
-        <legend class="text-2xl font-bold text-base-content mb-2">{{ key }}</legend>
+        <legend class="text-2xl font-bold text-base-content mb-2">{{ key | titlecase }}</legend>
           <table class="bg-base-100 table shadow w-full">
             <thead>
             <tr>
