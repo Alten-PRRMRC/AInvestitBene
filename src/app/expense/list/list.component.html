@@ -19,7 +19,7 @@
           <table class="bg-base-100 table shadow w-full">
             <thead>
             <tr>
-              @for(title of titleTable; track titleTable){
+              @for(title of titleTable; track $index){
                 <th class="text-base-content">{{ title }}</th>
               }
             </tr>
