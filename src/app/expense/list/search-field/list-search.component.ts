@@ -1,5 +1,6 @@
 // Import required modules
 import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
+import {SearchIcon} from '../../../resources/icons/expense-list-icon-search';
 
 /**
  * Component that show a search field.
@@ -8,7 +9,9 @@ import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/
  */
 @Component({
   selector: 'list-search',
-  imports: [],
+  imports: [
+    SearchIcon
+  ],
   templateUrl: './list-search.component.html',
   styleUrl: './list-search.component.css'
 })

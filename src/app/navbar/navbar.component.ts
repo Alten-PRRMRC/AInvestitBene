@@ -4,6 +4,12 @@ import {Component, inject} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {LocalstorageService} from '../localstorage/localstorage.service';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {SunIcon} from '../resources/icons/app-navbar-icon-sun';
+import {MoonIcon} from '../resources/icons/app-navbar-icon-moon';
+import {HomeIcon} from '../resources/icons/app-navbar-icon-home';
+import {AddIcon} from '../resources/icons/app-navbar-icon-add';
+import {StatsIcon} from '../resources/icons/app-navbar-icon-stats';
+import {AboutIcon} from '../resources/icons/app-navbar-icon-about';
 
 /**
  * Component that shows a navbar to navigate on pages
@@ -13,7 +19,13 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
   imports: [
     RouterLink,
     RouterLinkActive,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SunIcon,
+    MoonIcon,
+    HomeIcon,
+    AddIcon,
+    StatsIcon,
+    AboutIcon
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'

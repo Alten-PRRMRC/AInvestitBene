@@ -39,21 +39,11 @@
     </li>
     <li class="btn btn-ghost ml-auto w-[100px]">
       <label class="swap swap-rotate p-0">
-        <input type="checkbox" value="business" class="theme-controller" [formControl]="theme" (change)="onCheckboxChange($event)"/>
-        <svg
-          class="swap-off h-10 w-10 fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24">
-          <path
-            d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
-        </svg>
-        <svg
-          class="swap-on h-10 w-10 fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24">
-          <path
-            d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
-        </svg>
+        <input type="checkbox" value="business" class="theme-controller" [formControl]="theme"
+               (change)="onCheckboxChange($event)"/>
+        <app-navbar-icon-sun
+          class="swap-off h-10 w-10 fill-current"></app-navbar-icon-sun>
+        <app-navbar-icon-moon class="swap-on h-10 w-10 fill-current"></app-navbar-icon-moon>
       </label></li>
   </ul>
 </section>
@@ -64,10 +54,7 @@
     routerLinkActive="btn-active"
     routerLink="/"
   >
-    <svg class="size-[1.2em] fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-      <path
-        d="M341.8 72.6C329.5 61.2 310.5 61.2 298.3 72.6L74.3 280.6C64.7 289.6 61.5 303.5 66.3 315.7C71.1 327.9 82.8 336 96 336L112 336L112 512C112 547.3 140.7 576 176 576L464 576C499.3 576 528 547.3 528 512L528 336L544 336C557.2 336 569 327.9 573.8 315.7C578.6 303.5 575.4 289.5 565.8 280.6L341.8 72.6zM304 384L336 384C362.5 384 384 405.5 384 432L384 528L256 528L256 432C256 405.5 277.5 384 304 384z"/>
-    </svg>
+    <app-navbar-icon-home class="size-[1.2em] fill-current"></app-navbar-icon-home>
     <span class="dock-label">Home</span>
   </a>
   <a
@@ -75,10 +62,7 @@
     routerLinkActive="btn-active"
     routerLink="/add"
   >
-    <svg class="size-[1.2em] fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-      <path
-        d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/>
-    </svg>
+    <app-navbar-icon-add class="size-[1.2em] fill-current"></app-navbar-icon-add>
     <span class="dock-label">Add</span>
   </a>
   <a
@@ -86,10 +70,7 @@
     routerLinkActive="btn-active"
     routerLink="/stats"
   >
-    <svg class="size-[1.2em] fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-      <path
-        d="M256 144C256 117.5 277.5 96 304 96L336 96C362.5 96 384 117.5 384 144L384 496C384 522.5 362.5 544 336 544L304 544C277.5 544 256 522.5 256 496L256 144zM64 336C64 309.5 85.5 288 112 288L144 288C170.5 288 192 309.5 192 336L192 496C192 522.5 170.5 544 144 544L112 544C85.5 544 64 522.5 64 496L64 336zM496 160L528 160C554.5 160 576 181.5 576 208L576 496C576 522.5 554.5 544 528 544L496 544C469.5 544 448 522.5 448 496L448 208C448 181.5 469.5 160 496 160z"/>
-    </svg>
+    <app-navbar-icon-stats class="size-[1.2em] fill-current"></app-navbar-icon-stats>
     <span class="dock-label">Stats</span>
   </a>
   <a
@@ -97,27 +78,14 @@
     routerLinkActive="btn-active"
     routerLink="/about"
   >
-    <svg class="size-[1.2em] fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-      <path
-        d="M272 112C272 85.5 293.5 64 320 64C346.5 64 368 85.5 368 112C368 138.5 346.5 160 320 160C293.5 160 272 138.5 272 112zM224 256C224 238.3 238.3 224 256 224L320 224C337.7 224 352 238.3 352 256L352 512L384 512C401.7 512 416 526.3 416 544C416 561.7 401.7 576 384 576L256 576C238.3 576 224 561.7 224 544C224 526.3 238.3 512 256 512L288 512L288 288L256 288C238.3 288 224 273.7 224 256z"/>
-    </svg>
+    <app-navbar-icon-about class="size-[1.2em] fill-current"></app-navbar-icon-about>
     <span class="dock-label">About</span>
   </a>
   <label class="btn btn-ghost swap swap-rotate flex-1">
-    <input type="checkbox" value="business" class="theme-controller" [formControl]="theme" (change)="onCheckboxChange($event)">
-    <svg
-      class="swap-off size-[2em] fill-current"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24">
-      <path
-        d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
-    </svg>
-    <svg
-      class="swap-on size-[2em] fill-current"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24">
-      <path
-        d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
-    </svg>
+    <input type="checkbox" value="business" class="theme-controller" [formControl]="theme"
+           (change)="onCheckboxChange($event)">
+    <app-navbar-icon-sun
+      class="swap-off size-[2em] fill-current"></app-navbar-icon-sun>
+    <app-navbar-icon-moon class="swap-on size-[2em] fill-current"></app-navbar-icon-moon>
   </label>
 </section>
