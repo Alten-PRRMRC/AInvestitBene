@@ -33,7 +33,10 @@
                   <td [innerHTML]="expense.category | titlecase | category" class="text-base-content"></td>
                   <td class="text-base-content">{{ expense.date | date }}</td>
                   <td>
-                    <button class="btn btn-secondary btn-sm text-white" (click)="deleteExpense(expense.id)">Delete</button>
+                    <button class="btn btn-warning btn-sm text-warning-content w-[60px]" (click)="deleteExpense(expense.id)">Delete</button>
+                  </td>
+                  <td>
+                    <a [routerLink]="['/add']" [queryParams]="{ id: expense.id }" class="btn btn-secondary btn-sm text-secondary-content w-[60px]">Edit</a>
                   </td>
                 </tr>
               }
