@@ -21,10 +21,17 @@ export const routes: Routes = [
 		canMatch: [canMatchGuard],
 		canDeactivate: [canDeactivateGuard],
 	},
-  {
-    path: "stats",
-    loadComponent: () =>
-      import("./stats/stats.component").then((m) => m.StatsComponent),
-    canMatch: [canMatchGuard]
-  }
+	{
+		path: "add/:id",
+		loadComponent: () =>
+			import("./form/form.component").then((m) => m.FormComponent),
+		canMatch: [canMatchGuard],
+		canDeactivate: [canDeactivateGuard],
+	},
+	{
+		path: "stats",
+		loadComponent: () =>
+			import("./stats/stats.component").then((m) => m.StatsComponent),
+		canMatch: [canMatchGuard],
+	},
 ];
