@@ -23,7 +23,7 @@
             <span>Description is required</span>
           }
           @if(description?.errors?.['minlength'] && !description?.errors?.['noWhitespace']) {
-            <span>Description must be at least 3 characters</span>
+            <span>Description must be at least {{ description?.errors?.['minlength'].requiredLength }} characters</span>
           }
         </section>
       }
