@@ -1,7 +1,7 @@
 // Import required modules
 
 import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { LocalstorageService } from "../localstorage/localstorage.service";
 import { Expense } from "./expense.model";
 
@@ -26,7 +26,7 @@ export class ExpenseService implements OnDestroy {
 	 * Initialized with data from localStorage if available, otherwise empty array.
 	 * @private
 	 */
-	private expenseList$: BehaviorSubject<Expense[]>;
+	private _expenseList$: BehaviorSubject<Expense[]>;
 
 	/**
 	 * Constructor that injects the LocalstorageService and initializes the expense list
@@ -39,7 +39,7 @@ export class ExpenseService implements OnDestroy {
 		// Load expenses from localStorage or initialize with an empty array
 		const savedExpenses: Expense[] =
 			this.localStorageService.getItem<Expense[]>(this.STORAGE_KEY) || [];
-		this.expenseList$ = new BehaviorSubject<Expense[]>(savedExpenses);
+		this._expenseList$ = new BehaviorSubject<Expense[]>(savedExpenses);
 	}
 
 	/**
@@ -47,7 +47,7 @@ export class ExpenseService implements OnDestroy {
 	 * Ensures any pending operations are completed.
 	 */
 	ngOnDestroy(): void {
-		this.expenseList$.complete();
+		this._expenseList$.complete();
 	}
 
 	/**
@@ -56,9 +56,9 @@ export class ExpenseService implements OnDestroy {
 	 * @see LocalstorageService
 	 */
 	addItem(newItem: Expense): void {
-		const currentItems: Expense[] = this.expenseList$.getValue();
+		const currentItems: Expense[] = this._expenseList$.getValue();
 		const updatedItems: Expense[] = [...currentItems, newItem];
-		this.expenseList$.next(updatedItems);
+		this._expenseList$.next(updatedItems);
 		this.saveToLocalStorage(updatedItems);
 	}
 
@@ -66,8 +66,8 @@ export class ExpenseService implements OnDestroy {
 	 * Retrieves the current list of expense items as BehaviorSubject.
 	 * @returns A BehaviorSubject of the expense items array
 	 */
-	getItems(): BehaviorSubject<Expense[]> {
-		return this.expenseList$;
+	get expenseList$(): BehaviorSubject<Expense[]> {
+		return this._expenseList$;
 	}
 
 	/**
@@ -77,11 +77,11 @@ export class ExpenseService implements OnDestroy {
 	 * @see LocalstorageService
 	 */
 	updateItem(updatedItem: Expense): void {
-		const currentItems: Expense[] = this.expenseList$.getValue();
+		const currentItems: Expense[] = this._expenseList$.getValue();
 		const updatedItems: Expense[] = currentItems.flatMap((item) =>
 			item.id === updatedItem.id ? updatedItem : item,
 		);
-		this.expenseList$.next(updatedItems);
+		this._expenseList$.next(updatedItems);
 		this.saveToLocalStorage(updatedItems);
 	}
 
@@ -91,9 +91,9 @@ export class ExpenseService implements OnDestroy {
 	 * @see LocalstorageService
 	 */
 	deleteItem(itemId: string): void {
-		const currentItems: Expense[] = this.expenseList$.getValue();
+		const currentItems: Expense[] = this._expenseList$.getValue();
 		const updatedItems = currentItems.filter((item) => item.id !== itemId);
-		this.expenseList$.next(updatedItems);
+		this._expenseList$.next(updatedItems);
 		this.saveToLocalStorage(updatedItems);
 	}
 
@@ -103,7 +103,7 @@ export class ExpenseService implements OnDestroy {
 	 */
 	getById(id: string | undefined): Expense | undefined {
 		return id
-			? this.expenseList$.getValue().find((e) => e.id === id)
+			? this._expenseList$.getValue().find((e) => e.id === id)
 			: undefined;
 	}
 

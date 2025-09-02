@@ -74,8 +74,9 @@ export class ListComponent implements OnInit {
    */
   checkboxValue$ = new BehaviorSubject<boolean>(false);
 
-  ngOnInit(): void {
-    const expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.getItems();
+	ngOnInit(): void {
+		const expenseItems$: BehaviorSubject<Expense[]> =
+			this.expenseService.expenseList$;
 
     this.expenses$ = this.listService.getExpenses$(expenseItems$, this.searchQuery$, this.checkboxValue$);
     this.expensesKey$ = this.listService.getExpensesKey$(expenseItems$, this.checkboxValue$);
