@@ -1,10 +1,4 @@
-@if (isAuthenticated) {
-<div>
-  <div class="absolute inset-0"></div>
-  <div class="absolute inset-0 bg-base-200/75 backdrop-blur-xs"></div>
-</div>
-}
-<section class="bg-base-200 min-h-screen text-base-content" [class.hero]="isAuthenticated">
+<section [class.hero]="isAuthenticated" class="min-h-screen text-base-content">
   <section [class.hero-content]="isAuthenticated" class="text-center">
     <section [class.max-w-md]="isAuthenticated">
       <h1 class="text-[5vh] font-bold uppercase " aria-label="Page Title">{{ title() }}</h1>
