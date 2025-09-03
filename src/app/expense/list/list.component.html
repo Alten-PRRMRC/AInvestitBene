@@ -32,7 +32,7 @@
               @for(expense of arrExpense[key]; track expense.id){
                 <tr>
                   <td class="text-base-content">{{ expense.description }}</td>
-                  <td appAppHighlightBig [limitImport]="500" class="text-base-content">{{ expense.import | currency:'EUR' }}</td>
+                  <td AppHighlightBig [limitImport]="500" class="text-base-content" [amountImport]="expense.import"></td>
                   <td [innerHTML]="expense.category | titlecase | category" class="text-base-content"></td>
                   <td class="text-base-content">{{ expense.date | date }}</td>
                   <td>

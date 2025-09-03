@@ -18,7 +18,7 @@
               @for (key of arrExpenseKey; track key) {
                 <tr>
                   <td><b>{{ key | titlecase }}</b></td>
-                  <td><p appAppHighlightBig>{{ arrExpense[key] | currency:'EUR' }}</p></td>
+                  <td><p AppHighlightBig [amountImport]="arrExpense[key]"></p></td>
                   <p>
                 </tr>
               }
