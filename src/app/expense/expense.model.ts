@@ -15,6 +15,16 @@ export interface Expense {
 }
 
 /**
+ * Defines const of categories.
+ */
+const categories = ["fashion", "groceries", "cryptocurrency"] as const;
+
+/**
  * Defines the available categories for expense classification.
  */
-export type ExpenseCategory = "fashion" | "groceries" | "cryptocurrency";
+export type ExpenseCategory = (typeof categories)[number];
+
+/**
+ * Const array of categories.
+ */
+export const ArrExpenseCategory: ExpenseCategory[] = [...categories];
