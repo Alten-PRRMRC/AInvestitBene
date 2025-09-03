@@ -3,7 +3,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { LocalstorageService } from "../localstorage/localstorage.service";
-import { Expense } from "./expense.model";
+import { Expense, ExpenseCategory, ArrExpenseCategory } from "./expense.model";
 
 /**
  * Service responsible for managing expense data throughout the application.
@@ -105,6 +105,15 @@ export class ExpenseService implements OnDestroy {
 		return id
 			? this._expenseList$.getValue().find((e) => e.id === id)
 			: undefined;
+	}
+
+	/**
+	 * Provides the list of available expense categories.
+	 *
+	 * @returns An array of `ExpenseCategory` values.
+	 */
+	get categories(): ExpenseCategory[] {
+		return ArrExpenseCategory;
 	}
 
 	/**

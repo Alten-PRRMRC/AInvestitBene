@@ -11,7 +11,7 @@ import {
 	Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Params, Router, RouterLink } from "@angular/router";
-import { Expense, ExpenseCategory } from "../expense.model";
+import { Expense } from "../expense.model";
 import { ExpenseService } from "../expense.service";
 
 /**
@@ -36,9 +36,9 @@ function noWhitespaceValidator(
 export class FormComponent implements OnInit {
 	/**
 	 * Service for managing expense data
-	 * @private
+	 * @protected
 	 */
-	private _expenseService: ExpenseService = inject(ExpenseService);
+  protected _expenseService: ExpenseService = inject(ExpenseService);
 
 	/**
 	 * Route for get params in URL
@@ -66,11 +66,6 @@ export class FormComponent implements OnInit {
 	private _currentExpense: Expense | undefined;
 
 	/**
-	 * Available expense categories for the dropdown selection
-	 */
-	categories: ExpenseCategory[] = ["fashion", "groceries", "cryptocurrency"];
-
-	/**
 	 * The reactive form group that contains all form controls:
 	 * - Description: Required, minimum 2 characters
 	 * - Import: Required, minimum value of 1
@@ -85,7 +80,7 @@ export class FormComponent implements OnInit {
 			noWhitespaceValidator,
 		]),
 		import: new FormControl(1, [Validators.required, Validators.min(1)]),
-		category: new FormControl(this.categories[0], [Validators.required]),
+		category: new FormControl(this._expenseService.categories[0], [Validators.required]),
 		date: new FormControl(formatDate(Date.now(), "yyyy-MM-dd", "en"), [
 			Validators.required,
 		]),
@@ -148,7 +143,7 @@ export class FormComponent implements OnInit {
 		const defaultValue = {
 			description: "",
 			import: 1,
-			category: this.categories[0],
+			category: this._expenseService.categories[0],
 			date: formatDate(Date.now(), "yyyy-MM-dd", "en"),
 		};
 		const value = expense

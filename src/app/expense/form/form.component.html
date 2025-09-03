@@ -59,6 +59,7 @@
         <span class="label-text">Category</span>
       </label>
       <select id="category" formControlName="category" class="select select-bordered w-full focus:outline-none">
+        @let categories = this._expenseService.categories;
         @for(category of categories; track category) {
           <option [value]="category">
             {{ category | titlecase }}
