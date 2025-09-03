@@ -9,10 +9,11 @@ import { ListSwitchComponent } from "../list/switch/list-switch.component";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Dict as DictStats } from "../list/dict.model";
 import { AppHighlightBig } from "../list/app-highlight-big";
-import { AsyncPipe, CurrencyPipe, TitleCasePipe } from "@angular/common";
+import { AsyncPipe, TitleCasePipe } from "@angular/common";
 import { ListService } from "../list/list.service";
 import { ExpenseService } from "../expense.service";
 import { Expense } from "../expense.model";
+import { StatsSelectorComponent } from "./category-selector/stats-selector.component";
 
 @Component({
 	selector: "expense-stats",
@@ -20,8 +21,8 @@ import { Expense } from "../expense.model";
 		ListSwitchComponent,
 		AppHighlightBig,
 		AsyncPipe,
-		CurrencyPipe,
 		TitleCasePipe,
+		StatsSelectorComponent,
 	],
 	templateUrl: "./stats.component.html",
 	styleUrl: "./stats.component.css",
@@ -69,17 +70,44 @@ export class StatsComponent implements OnInit {
 		false,
 	);
 
+	/**
+	 * BehaviorSubject that store selector values from StatsSelectorComponent.
+	 * @see StatsSelectorComponent
+	 */
+	categoryValue$: BehaviorSubject<string> = new BehaviorSubject<string>("all");
+
+	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
+		query: string,
+		expenses: Expense[],
+	): Expense[] =>
+		query === "all" ? expenses : expenses.filter((e) => e.category === query);
+
 	ngOnInit(): void {
 		const expenseItems$: BehaviorSubject<Expense[]> =
 			this.expenseService.expenseList$;
-		let expenses$ = this.listService.getExpenses$(
+		const expenses$ = this.listService.getExpenses$(
 			expenseItems$,
-			new BehaviorSubject<string>(""),
+			this.categoryValue$,
 			this.checkboxValue$,
+			this.filterFn,
 		);
 
+		let filteredDict$: BehaviorSubject<Expense[]> = new BehaviorSubject<
+			Expense[]
+		>([]);
+
+		expenses$.subscribe((dictExpense) => {
+			const allExpenses: Expense[] = [];
+
+			Object.keys(dictExpense).forEach((key) => {
+				allExpenses.push(...dictExpense[key]);
+			});
+
+			filteredDict$.next(allExpenses);
+		});
+
 		this.expensesKey$ = this.listService.getExpensesKey$(
-			expenseItems$,
+			filteredDict$,
 			this.checkboxValue$,
 		);
 		this.expensesTotal$ = this.listService.getExpensesTotalImport$(expenses$);
@@ -93,5 +121,15 @@ export class StatsComponent implements OnInit {
 	 */
 	onCheckboxChange(value: boolean): void {
 		this.checkboxValue$.next(value);
+	}
+
+	/**
+	 * Change the value of the categoryValue$ to the current status of the selector
+	 * @param value - String selected of the selector
+	 * @see StatsSelectorComponent
+	 * @see categoryValue$
+	 */
+	onCategoryChange(value: string): void {
+		this.categoryValue$.next(value);
 	}
 }

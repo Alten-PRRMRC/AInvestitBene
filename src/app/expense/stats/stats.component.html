@@ -2,7 +2,8 @@
   <h2 class="text-2xl font-bold text-center text-base-content mb-5">{{ subtitle() }}</h2>
   @let arrExpense = this.expensesTotal$ | async;
   @let arrExpenseKey = this.expensesKey$ | async;
-  @if (arrExpense && Object.keys(arrExpense).length > 0) {
+  @let expense = this.expenseService.expenseList$ | async;
+  @if (expense !== null && expense.length > 0) {
     <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
     <section class="overflow-x-auto">
       <fieldset class="rounded-box border p-4">
@@ -11,17 +12,27 @@
           <table class="table">
             <thead>
             <tr>
-              <th class="text-base-content" colspan=2>Total of</th>
+              <th class="text-base-content" colspan=2>
+                <category-selector (categoryValue)="onCategoryChange($event)"></category-selector>
+              </th>
             </tr>
             </thead>
             <tbody>
-              @for (key of arrExpenseKey; track key) {
+            @if (arrExpenseKey !== null && arrExpenseKey.length > 0 && arrExpense !== null) {
+              @for (key of arrExpenseKey; track $index) {
                 <tr>
                   <td><b>{{ key | titlecase }}</b></td>
                   <td><p AppHighlightBig [amountImport]="arrExpense[key]"></p></td>
                   <p>
                 </tr>
               }
+            } @else {
+              <tr>
+                <td>
+                  <p class="font-bold">No result found.</p>
+                </td>
+              </tr>
+            }
             </tbody>
           </table>
         </div>
