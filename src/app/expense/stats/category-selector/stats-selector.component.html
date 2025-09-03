@@ -1,0 +1,12 @@
+<section class="flex items-center h-[21px]">
+  <span class="label-text">Total of</span>
+  <select class="select pl-1 select-ghost w-auto focus:outline-none" (click)="onCategoryChange($event)">
+    <option selected>all</option>
+    @let categories = this._expenseService.categories;
+    @for(category of categories; track category) {
+      <option [value]="category">
+        {{ category | titlecase }}
+      </option>
+    }
+</select>
+</section>
