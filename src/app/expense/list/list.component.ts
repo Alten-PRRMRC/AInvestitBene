@@ -81,6 +81,29 @@ export class ListComponent implements OnInit {
 	 */
 	checkboxValue$ = new BehaviorSubject<boolean>(false);
 
+	/**
+	 * Filters a list of expenses based on a search query.
+	 *
+	 * Removes whitespace and performs a case-insensitive match against the expense description.
+	 * If no matches are found, returns the original list.
+	 *
+	 * @param query - The search string used to filter expenses.
+	 * @param expenses - The array of Expense objects to filter.
+	 * @returns A filtered array of Expense objects, or the original array if no matches are found.
+	 */
+	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
+		query: string,
+		expenses: Expense[],
+	): Expense[] => {
+		if (query.length === 0) {
+			return expenses;
+		}
+		let filtered: Expense[] = expenses.filter((e: Expense): boolean =>
+			e.description.toLowerCase().replace(/\s/g, "").includes(query),
+		);
+		return filtered.length === 0 ? expenses : filtered;
+	};
+
 	ngOnInit(): void {
 		const expenseItems$: BehaviorSubject<Expense[]> =
 			this.expenseService.expenseList$;
@@ -89,9 +112,23 @@ export class ListComponent implements OnInit {
 			expenseItems$,
 			this.searchQuery$,
 			this.checkboxValue$,
+			this.filterFn,
 		);
+		let filteredDict$: BehaviorSubject<Expense[]> = new BehaviorSubject<
+			Expense[]
+		>([]);
+
+		this.expenses$.subscribe((dictExpense) => {
+			const allExpenses: Expense[] = [];
+
+			Object.keys(dictExpense).forEach((key) => {
+				allExpenses.push(...dictExpense[key]);
+			});
+
+			filteredDict$.next(allExpenses);
+		});
 		this.expensesKey$ = this.listService.getExpensesKey$(
-			expenseItems$,
+			filteredDict$,
 			this.checkboxValue$,
 		);
 	}

@@ -7,9 +7,12 @@
 
   @let arrExpense = expenses$ | async;
   @let arrExpenseKey = expensesKey$ | async;
+  @let expense = this.expenseService.expenseList$ | async;
 
-  @if(arrExpense && Object.keys(arrExpense).length > 0){
-    <list-search (searchChange)="onSearchUpdate($event)" [caseSensitive]="false"></list-search>
+  @if(arrExpense !== null && Object.keys(arrExpense).length > 0){
+    @if (expense !== null && expense.length > 1){
+      <list-search (searchChange)="onSearchUpdate($event)" [caseSensitive]="false"></list-search>
+    }
     <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
 
     @for(key of arrExpenseKey; track key){
