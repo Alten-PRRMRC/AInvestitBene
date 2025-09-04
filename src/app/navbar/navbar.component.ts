@@ -43,7 +43,7 @@ export class NavbarComponent {
 	 * - `iconComponent`: Icon as an Angular component;
 	 *    - `component`: Name of the angular component
 	 *    - `class`: CSS class apply to icon;
-	 * - `exact`: Optional, if `true`, the route match must be exact and add a css clas.
+	 * - `exact`: Optional, if `true`, the route match must be exact.
 	 */
 	navItems = [
 		{
