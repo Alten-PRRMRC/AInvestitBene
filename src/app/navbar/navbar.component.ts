@@ -102,7 +102,7 @@ export class NavbarComponent {
 	private _localStorage: LocalstorageService = inject(LocalstorageService);
 
 	constructor() {
-		// Fix bug when use '--preferdark' in daisyUI as force the theme with that flag
+		// Fix bug when use '--preferdark' in daisyUI as force the theme with that flag and broke themeController.
 		const preferTheme: boolean = window.matchMedia(
 			"(prefers-color-scheme: dark)",
 		).matches;

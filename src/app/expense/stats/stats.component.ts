@@ -8,7 +8,7 @@ import {
 import { ListSwitchComponent } from "../list/switch/list-switch.component";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Dict as DictStats } from "../list/dict.model";
-import { AppHighlightBig } from "../list/app-highlight-big";
+import { AppHighlightBig } from "../app-highlight-big";
 import { AsyncPipe, TitleCasePipe } from "@angular/common";
 import { ListService } from "../list/list.service";
 import { ExpenseService } from "../expense.service";
