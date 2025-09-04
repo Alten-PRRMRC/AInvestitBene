@@ -12,7 +12,9 @@ import { StatsIcon } from "../resources/icons/app-navbar-icon-stats";
 import { AboutIcon } from "../resources/icons/app-navbar-icon-about";
 
 /**
- * Component that shows a navbar to navigate on pages
+ * Component that shows a navbar to navigate on pages and change app theme.
+ * Theme value is serialized to persist on page refresh
+ * @see onCheckboxChange
  */
 @Component({
 	selector: "app-navbar",
@@ -35,7 +37,6 @@ export class NavbarComponent {
 
 	/**
 	 * Items of the navbar to navigate through the site
-	 *
 	 *
 	 * - `label`: The display name of the navigation item;
 	 * - `route`: The Angular route path to navigate to;
@@ -82,6 +83,7 @@ export class NavbarComponent {
 
 	/**
 	 * Form control to manage application's theme setting.
+	 * The value of the theme is set in the template.
 	 */
 	themeController: FormControl<boolean | null> = new FormControl<
 		boolean | null
@@ -109,6 +111,12 @@ export class NavbarComponent {
 		);
 	}
 
+	/**
+	 * Handles checkbox change event to update theme preference and serialize it.
+	 * @param event - Checkbox event, set theme status to themeController
+	 * @see themeController
+	 * @see LocalStorageService
+	 */
 	onCheckboxChange(event: Event): void {
 		const value: boolean = (event.target as HTMLInputElement).checked;
 		this.themeController.setValue(value);
