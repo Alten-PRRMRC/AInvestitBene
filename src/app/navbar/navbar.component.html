@@ -1,45 +1,20 @@
 <section class="navbar sticky bottom-0 bg-base-100 rounded-t-xl hidden lg:flex">
   <ul class="menu menu-horizontal w-full justify-start gap-2 p-0">
-    <li>
-      <a
-        class="btn btn-outline btn-primary rounded-md w-[100px]"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLinkActive="btn-active"
-        routerLink="/"
-      >
-        Home
-      </a>
-    </li>
-    <li>
-      <a
-        class="btn btn-outline btn-primary rounded-md w-[100px]"
-        routerLinkActive="btn-active"
-        routerLink="/add"
-      >
-        Add
-      </a>
-    </li>
-    <li>
-      <a
-        class="btn btn-outline btn-primary rounded-md w-[100px]"
-        routerLinkActive="btn-active"
-        routerLink="/stats"
-      >
-        Stats
-      </a>
-    </li>
-    <li>
-      <a
-        class="btn btn-outline btn-primary rounded-md w-[100px]"
-        routerLinkActive="btn-active"
-        routerLink="/about"
-      >
-        About
-      </a>
-    </li>
+    @for (item of navItems; track item.label) {
+      <li>
+        <a
+          class="btn btn-outline btn-primary rounded-md w-[100px]"
+          [routerLink]="item.route"
+          [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+          routerLinkActive="btn-active"
+        >
+          {{ item.label }}
+        </a>
+      </li>
+    }
     <li class="ml-auto w-[100px]">
       <label class="swap swap-rotate p-0">
-        <input type="checkbox" value="business" class="theme-controller" [formControl]="theme"
+        <input type="checkbox" value="business" class="theme-controller" [formControl]="themeController"
                (change)="onCheckboxChange($event)"/>
         <app-navbar-icon-sun
           class="swap-off h-10 w-10 fill-current"></app-navbar-icon-sun>
@@ -48,41 +23,32 @@
   </ul>
 </section>
 <section class="dock w-full sticky bottom-0 bg-base-100 rounded-t-xl flex lg:hidden">
-  <a
-    class="btn btn-ghost btn-primary rounded-md flex-1"
-    [routerLinkActiveOptions]="{ exact: true }"
-    routerLinkActive="btn-active"
-    routerLink="/"
-  >
-    <app-navbar-icon-home class="size-[1.2em] fill-current"></app-navbar-icon-home>
-    <span class="dock-label">Home</span>
-  </a>
-  <a
-    class="btn btn-ghost btn-primary rounded-md flex-1"
-    routerLinkActive="btn-active"
-    routerLink="/add"
-  >
-    <app-navbar-icon-add class="size-[1.2em] fill-current"></app-navbar-icon-add>
-    <span class="dock-label">Add</span>
-  </a>
-  <a
-    class="btn btn-ghost btn-primary rounded-md flex-1"
-    routerLinkActive="btn-active"
-    routerLink="/stats"
-  >
-    <app-navbar-icon-stats class="size-[1.2em] fill-current"></app-navbar-icon-stats>
-    <span class="dock-label">Stats</span>
-  </a>
-  <a
-    class="btn btn-ghost btn-primary rounded-md flex-1"
-    routerLinkActive="btn-active"
-    routerLink="/about"
-  >
-    <app-navbar-icon-about class="size-[1.2em] fill-current"></app-navbar-icon-about>
-    <span class="dock-label">About</span>
-  </a>
+  @for (item of navItems; track item.label) {
+    <a
+      class="btn btn-ghost btn-primary rounded-md flex-1"
+      [routerLink]="item.route"
+      [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+      routerLinkActive="btn-active"
+    >
+      @switch (item.iconComponent.component) {
+        @case('app-navbar-icon-home'){
+          <app-navbar-icon-home [class]="item.iconComponent.class"></app-navbar-icon-home>
+        }
+        @case('app-navbar-icon-add'){
+          <app-navbar-icon-add [class]="item.iconComponent.class"></app-navbar-icon-add>
+        }
+        @case('app-navbar-icon-stats'){
+          <app-navbar-icon-stats [class]="item.iconComponent.class"></app-navbar-icon-stats>
+        }
+        @case('app-navbar-icon-about'){
+          <app-navbar-icon-about [class]="item.iconComponent.class"></app-navbar-icon-about>
+        }
+      }
+      <span class="dock-label">{{ item.label }}</span>
+    </a>
+  }
   <label class="btn btn-ghost swap swap-rotate flex-1">
-    <input type="checkbox" value="business" class="theme-controller" [formControl]="theme"
+    <input type="checkbox" value="business" class="theme-controller" [formControl]="themeController"
            (change)="onCheckboxChange($event)">
     <app-navbar-icon-sun
       class="swap-off size-[2em] fill-current"></app-navbar-icon-sun>
