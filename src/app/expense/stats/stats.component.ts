@@ -76,6 +76,13 @@ export class StatsComponent implements OnInit {
 	 */
 	categoryValue$: BehaviorSubject<string> = new BehaviorSubject<string>("all");
 
+	/**
+	 * Filters a list of expenses based on category selector.
+	 *
+	 * @param query - The category value used to filter expenses.
+	 * @param expenses - The array of Expense objects to filter.
+	 * @returns A filtered array of Expense objects, or the original array if no matches are found.
+	 */
 	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
 		query: string,
 		expenses: Expense[],
@@ -96,10 +103,10 @@ export class StatsComponent implements OnInit {
 			Expense[]
 		>([]);
 
-		expenses$.subscribe((dictExpense) => {
+		expenses$.subscribe((dictExpense: DictStats<Expense[]>): void => {
 			const allExpenses: Expense[] = [];
 
-			Object.keys(dictExpense).forEach((key) => {
+			Object.keys(dictExpense).forEach((key: string): void => {
 				allExpenses.push(...dictExpense[key]);
 			});
 
