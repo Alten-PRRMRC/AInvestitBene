@@ -35,10 +35,26 @@ function noWhitespaceValidator(
 })
 export class FormComponent implements OnInit {
 	/**
+	 * Texts used in template changed based in income or expense
+	 * @see _isIncome
+	 */
+	labels = {
+		subtitle: "Add new import",
+		description: "Enter import description",
+		submit: "Save import",
+	};
+
+	/**
+	 * Check from params from route or from amount of expense to determinate if is an income or not
+	 * @private
+	 */
+	private _isIncome: boolean = false;
+
+	/**
 	 * Service for managing expense data
 	 * @protected
 	 */
-  protected _expenseService: ExpenseService = inject(ExpenseService);
+	protected _expenseService: ExpenseService = inject(ExpenseService);
 
 	/**
 	 * Route for get params in URL
@@ -80,7 +96,9 @@ export class FormComponent implements OnInit {
 			noWhitespaceValidator,
 		]),
 		import: new FormControl(1, [Validators.required, Validators.min(1)]),
-		category: new FormControl(this._expenseService.categories[0], [Validators.required]),
+		category: new FormControl(this._expenseService.categories[0], [
+			Validators.required,
+		]),
 		date: new FormControl(formatDate(Date.now(), "yyyy-MM-dd", "en"), [
 			Validators.required,
 		]),
@@ -92,12 +110,24 @@ export class FormComponent implements OnInit {
 			this._formDirty = this.expenseForm.dirty;
 		});
 		// Track url changes and get id of the current expenses
-		this._route.queryParams.subscribe((query: Params): void => {
-			const expenseId = query["id"] || undefined;
-			// Initialize form with expense value if id exists or use default
-			this._currentExpense = this._expenseService.getById(expenseId);
-			this.resetForm(this._currentExpense);
-		});
+		const query: Params = this._route.snapshot.queryParams;
+		const expenseId: string = query["id"] || undefined;
+		this._isIncome = query["isIncome"] === "true";
+		// Initialize form with expense value if id exists or use default
+		const expense = this._expenseService.getById(expenseId);
+		this._currentExpense = expense ? { ...expense } : undefined;
+		if (this._currentExpense) {
+			this._isIncome = this._currentExpense.import >= 0;
+			this._currentExpense.import *= this._isIncome ? 1 : -1;
+		}
+		this.labels = this._isIncome
+			? this.labels
+			: {
+					subtitle: "Add new export",
+					description: "Enter export description",
+					submit: "Save export",
+				};
+		this.resetForm(this._currentExpense);
 	}
 
 	/**
@@ -112,13 +142,13 @@ export class FormComponent implements OnInit {
 	onSubmit(): void {
 		if (!this.expenseForm.valid) return;
 		const newExpense: Expense = {
-			id: Date.now().toString(), // Simple ID generation using timestamp
+			id: this._currentExpense?.id || Date.now().toString(), // Simple ID generation using timestamp
 			...this.expenseForm.value,
+			date: new Date(this.expenseForm.value.date),
+			import: this.expenseForm.value.import * (this._isIncome ? 1 : -1),
 		};
-		newExpense.date = new Date(newExpense.date);
 		// If current expense exists it's not new
 		if (this._currentExpense) {
-			newExpense.id = this._currentExpense.id;
 			this._expenseService.updateItem(newExpense);
 		} else {
 			this._expenseService.addItem(newExpense);

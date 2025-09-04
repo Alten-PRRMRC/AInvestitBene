@@ -1,6 +1,6 @@
 <section class="p-6 max-w-xl mx-auto bg-base-100 rounded-lg shadow-md">
   <section class="flex justify-between items-center mb-4">
-    <h2 class="text-xl font-bold text-base-content">Add New Expense</h2>
+    <h2 class="text-xl font-bold text-base-content">{{ this.labels.subtitle }}</h2>
     <a [routerLink]="['/']" class="btn btn-sm btn-outline btn-error">X</a>
   </section>
 
@@ -13,7 +13,7 @@
         type="text"
         id="description"
         formControlName="description"
-        placeholder="Enter expense description"
+        [placeholder]="this.labels.description"
         class="input input-bordered w-full focus:outline-none"
       />
       @let description = expenseForm.get('description');
@@ -89,7 +89,7 @@
     </section>
     <section class="flex justify-end gap-4 pt-4">
       <button type="submit" [disabled]="expenseForm.invalid" class="btn btn-primary">
-        Save Expense
+        {{ this.labels.submit }}
       </button>
       <button type="button" (click)="resetForm()" class="btn btn-outline btn-error">
         Reset
