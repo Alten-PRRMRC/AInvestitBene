@@ -1,14 +1,19 @@
 <section class="max-w-5xl mx-auto p-5">
   <h2 class="text-2xl font-bold text-center text-base-content mb-5">{{ subtitle() }}</h2>
-  @let arrExpense = this.expensesTotal$ | async;
-  @let arrExpenseKey = this.expensesKey$ | async;
-  @let expense = this.expenseService.expenseList$ | async;
-  @if (expense !== null && expense.length > 0) {
+  @let service = this.statsService;
+  @let filteredExpense = service.expensesTotal$ | async;
+  @let filteredExpenseKey = service.expensesFilteredKey$ | async;
+  @let expense = service.expenseService.expenseList$ | async;
+
+  @let expenseCheck = expense !== null && expense.length > 0;
+  @let filterExpenseCheck = filteredExpenseKey !== null && filteredExpenseKey.length > 0 && filteredExpense !== null;
+
+  @if (expenseCheck) {
     <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
     <section class="overflow-x-auto">
       <fieldset class="rounded-box border p-4">
-        <legend class="text-2xl font-bold text-base-content mb-2">Stats</legend>
-        <div class="bg-base-100 table overflow-x-auto rounded-box border border-base-content/20 w-full">
+        <legend class="text-2xl font-bold text-base-content mb-2">StatsService</legend>
+        <div class="bg-base-100 table overflow-x-auto rounded-box rounded-bl-none rounded-br-none border border border-base-content/20 w-full">
           <table class="table">
             <thead>
             <tr>
@@ -18,11 +23,11 @@
             </tr>
             </thead>
             <tbody>
-            @if (arrExpenseKey !== null && arrExpenseKey.length > 0 && arrExpense !== null) {
-              @for (key of arrExpenseKey; track $index) {
+            @if (filterExpenseCheck) {
+              @for (key of filteredExpenseKey; track $index) {
                 <tr>
                   <td><b>{{ key | titlecase }}</b></td>
-                  <td><p AppHighlightBig [amountImport]="arrExpense[key]"></p></td>
+                  <td><p AppHighlightBig [amountImport]="filteredExpense[key]"></p></td>
                   <p>
                 </tr>
               }

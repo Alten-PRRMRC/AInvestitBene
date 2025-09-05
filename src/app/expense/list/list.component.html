@@ -5,32 +5,35 @@
     <a [routerLink]="['/add']" [queryParams]="{ isIncome: true }" class="btn btn-secondary">Add new income</a>
     <a [routerLink]="['/add']" [queryParams]="{ isIncome: false }" class="btn btn-primary">Add new expense</a>
   </section>
+  @let service = this.listService;
+  @let filteredExpense = service.filteredExpenses$ | async;
+  @let filteredExpenseKey = service.expensesFilteredKey$ | async;
+  @let expense = service.expenseItems$ | async;
 
-  @let arrExpense = expenses$ | async;
-  @let arrExpenseKey = expensesKey$ | async;
-  @let expense = this.expenseService.expenseList$ | async;
+  @let filterExpenseCheck = filteredExpense !== null && Object.keys(filteredExpense).length > 0;
+  @let searchCheck = expense !== null && expense.length > 1;
 
-  @if(arrExpense !== null && Object.keys(arrExpense).length > 0){
-    @if (expense !== null && expense.length > 1){
+  @if(filterExpenseCheck){
+    @if (searchCheck){
       <list-search (searchChange)="onSearchUpdate($event)" [caseSensitive]="false"></list-search>
     }
     <list-switch (checkboxChange)="onCheckboxChange($event)"></list-switch>
 
-    @for(key of arrExpenseKey; track key){
+    @for(key of filteredExpenseKey; track key){
       <section class="overflow-x-auto">
-      <fieldset class="rounded-box border p-4">
+      <fieldset class="rounded-box border p-4 overflow-x-auto">
         <legend class="text-2xl font-bold text-base-content mb-2">{{ key | titlecase }}</legend>
-        <div class="bg-base-100 table shadow w-full overflow-x-auto rounded-box border border-base-content/20">
+        <div class="bg-base-100 table shadow w-full overflow-x-auto rounded-box rounded-bl-none rounded-br-none border border-base-content/20">
           <table class="table">
             <thead>
             <tr>
               @for(title of titleTable; track $index){
-                <th class="text-base-content">{{ title }}</th>
+                <th class="text-base-content w-[25%]">{{ title }}</th>
               }
             </tr>
             </thead>
             <tbody>
-              @for(expense of arrExpense[key]; track expense.id){
+              @for(expense of filteredExpense[key]; track expense.id){
                 <tr>
                   <td class="text-base-content">{{ expense.description }}</td>
                   <td AppHighlightBig [limitImport]="500" class="text-base-content" [amountImport]="expense.import"></td>

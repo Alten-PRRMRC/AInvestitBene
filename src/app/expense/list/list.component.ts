@@ -3,12 +3,9 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { BehaviorSubject, Observable } from "rxjs";
-import { Expense } from "../expense.model";
-import { ExpenseService } from "../expense.service";
+import { BehaviorSubject } from "rxjs";
 import { CategoryPipe } from "./category.pipe";
 import { ListSwitchComponent } from "./switch/list-switch.component";
-import { Dict as DictExpense } from "./dict.model";
 import { ListSearchComponent } from "./search-field/list-search.component";
 import { AppHighlightBig } from "../app-highlight-big";
 import { ListService } from "./list.service";
@@ -37,13 +34,6 @@ export class ListComponent implements OnInit {
 	 */
 	protected listService: ListService = inject(ListService);
 
-	/**
-	 * Initialized injecting ExpenseService service
-	 * @protected
-	 * @see ExpenseService
-	 */
-	protected expenseService: ExpenseService = inject(ExpenseService);
-
 	/** Used to check if expenses$ is not a dict empty
 	 * @protected
 	 */
@@ -56,19 +46,6 @@ export class ListComponent implements OnInit {
 	titleTable: string[] = ["Description", "Amount", "Category", "Date", "", ""];
 
 	/**
-	 * Observable of a dictionary Expense
-	 * @see DictExpense
-	 * @see Expense
-	 */
-	expenses$: Observable<DictExpense<Expense[]>> = new Observable();
-
-	/**
-	 * Observable of dictionary keys
-	 * @see DictExpense
-	 */
-	expensesKey$: Observable<string[]> = new Observable();
-
-	/**
 	 * BehaviorSubject that stores search field values from ListSearchComponent.
 	 * @see ListSearchComponent
 	 */
@@ -79,67 +56,20 @@ export class ListComponent implements OnInit {
 	 * If is true is annually, false is monthly
 	 * @see ListSwitchComponent
 	 */
-	checkboxValue$ = new BehaviorSubject<boolean>(false);
-
-	/**
-	 * Filters a list of expenses based on a search query.
-	 *
-	 * Removes whitespace and performs a case-insensitive match against the expense description.
-	 * If no matches are found, returns the original list.
-	 *
-	 * @param query - The search string used to filter expenses.
-	 * @param expenses - The array of Expense objects to filter.
-	 * @returns A filtered array of Expense objects, or the original array if no matches are found.
-	 */
-	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
-		query: string,
-		expenses: Expense[],
-	): Expense[] => {
-		if (query.length === 0) {
-			return expenses;
-		}
-		let filtered: Expense[] = expenses.filter((e: Expense): boolean =>
-			e.description.toLowerCase().replace(/\s/g, "").includes(query),
-		);
-		return filtered.length === 0 ? expenses : filtered;
-	};
+	checkboxValue$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	ngOnInit(): void {
-		const expenseItems$: BehaviorSubject<Expense[]> =
-			this.expenseService.expenseList$;
-
-		this.expenses$ = this.listService.getExpenses$(
-			expenseItems$,
-			this.searchQuery$,
-			this.checkboxValue$,
-			this.filterFn,
-		);
-		let filteredDict$: BehaviorSubject<Expense[]> = new BehaviorSubject<
-			Expense[]
-		>([]);
-
-		this.expenses$.subscribe((dictExpense) => {
-			const allExpenses: Expense[] = [];
-
-			Object.keys(dictExpense).forEach((key) => {
-				allExpenses.push(...dictExpense[key]);
-			});
-
-			filteredDict$.next(allExpenses);
-		});
-		this.expensesKey$ = this.listService.getExpensesKey$(
-			filteredDict$,
-			this.checkboxValue$,
-		);
+		this.listService.initialize(this.searchQuery$, this.checkboxValue$);
 	}
 
 	/**
-	 * Delete from the table an expense item by its ID calling `deleteItem()` of the ExpenseService.
+	 * Wrapper of deleteExpense of ListService
 	 * @param id - The ID of the expense item to be deleted
+   * @see ListService
 	 * @see ExpenseService
 	 */
 	deleteExpense(id: string): void {
-		this.expenseService.deleteItem(id);
+		this.listService.deleteExpense(id);
 	}
 
 	/**

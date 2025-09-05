@@ -1,7 +1,3 @@
-tr:hover:not(thead tr){
-  background-color: var(--color-base-300);
-}
-
-th {
-  width: 25%;
+tr:hover:not(thead tr) {
+	background-color: var(--color-base-300);
 }

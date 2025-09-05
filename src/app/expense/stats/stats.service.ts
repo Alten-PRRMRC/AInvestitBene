@@ -1,35 +1,23 @@
-// Import required modules
-
 import { inject, Injectable } from "@angular/core";
-import {
-  BehaviorSubject,
-  map,
-  Observable,
-  switchMap,
-} from "rxjs";
-import { Dict } from "./dict.model";
+import {BehaviorSubject, map, Observable, switchMap} from "rxjs";
 import { Expense } from "../expense.model";
+import { Dict } from "../list/dict.model";
 import { ExpenseService } from "../expense.service";
 
-/**
- * Service responsible for managing streams of Expense's observable for ListComponent.
- * @see ListComponent
- * @see ExpenseService
- */
 @Injectable({
 	providedIn: "root",
 })
-export class ListService {
+export class StatsService {
 	/**
 	 * Observable of a dictionary filtered Expense
 	 * @see DictExpense
 	 * @see Expense
 	 */
-	filteredExpenses$: Observable<Dict<Expense[]>> = new Observable();
+	expensesFiltered$: Observable<Dict<Expense[]>> = new Observable();
 
 	/**
 	 * Observable of dictionary keys
-	 * @see Dict
+	 * @see DictExpense
 	 */
 	expensesFilteredKey$: Observable<string[]> = new Observable();
 
@@ -38,36 +26,32 @@ export class ListService {
 	 * @protected
 	 * @see ExpenseService
 	 */
-	protected expenseService: ExpenseService = inject(ExpenseService);
+	expenseService: ExpenseService = inject(ExpenseService);
 
   /**
    * Observable of a Expense
    * @see Expense
    */
-  expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.expenseList$;
+	expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.expenseList$;
 
 	/**
-	 * Filters a list of expenses based on a search query.
+	 * Observable of a dictionary of grouped imports Expenses
+	 * @see DictStats
+	 */
+	expensesTotal$: Observable<Dict<number>> = new Observable();
+
+	/**
+	 * Filters a list of expenses based on category selector.
 	 *
-	 * Removes whitespace and performs a case-insensitive match against the expense description.
-	 * If no matches are found, return the original list.
-	 *
-	 * @param query - The search string used to filter expenses.
+	 * @param query - The category value used to filter expenses.
 	 * @param expenses - The array of Expense objects to filter.
 	 * @returns A filtered array of Expense objects, or the original array if no matches are found.
 	 */
 	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
 		query: string,
 		expenses: Expense[],
-	): Expense[] => {
-		if (query.length === 0) {
-			return expenses;
-		}
-		let filtered: Expense[] = expenses.filter((e: Expense): boolean =>
-			e.description.toLowerCase().replace(/\s/g, "").includes(query),
-		);
-		return filtered.length === 0 ? expenses : filtered;
-	};
+	): Expense[] =>
+		query === "all" ? expenses : expenses.filter((e) => e.category === query);
 
   /**
    * Initializes the expense observables
@@ -83,15 +67,15 @@ export class ListService {
 		queryFilter: BehaviorSubject<string>,
 		checkboxValue$: BehaviorSubject<boolean>,
 	): void {
-		this.filteredExpenses$ = this.expenseService.getExpenses$(
+		this.expensesFiltered$ = this.expenseService.getExpenses$(
 			this.expenseItems$,
 			queryFilter,
 			checkboxValue$,
 			this.filterFn,
 		);
 
-		this.expensesFilteredKey$ =
-      this.filteredExpenses$.pipe(
+    this.expensesFilteredKey$ =
+      this.expensesFiltered$.pipe(
         map((dictExpense: Dict<Expense[]>): Expense[] => {
           const allExpenses: Expense[] = Object.values(dictExpense).flat();
           return allExpenses;
@@ -103,14 +87,9 @@ export class ListService {
           )
         )
       );
-  }
 
-	/**
-	 * Delete from the table an expense item by its ID calling `deleteItem()` of the ExpenseService.
-	 * @param id - The ID of the expense item to be deleted
-	 * @see ExpenseService
-	 */
-	deleteExpense(id: string): void {
-		this.expenseService.deleteItem(id);
+		this.expensesTotal$ = this.expenseService.getExpensesTotalImport$(
+			this.expensesFiltered$,
+		);
 	}
 }

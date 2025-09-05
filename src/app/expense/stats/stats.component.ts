@@ -7,14 +7,16 @@ import {
 } from "@angular/core";
 import { ListSwitchComponent } from "../list/switch/list-switch.component";
 import { BehaviorSubject, Observable } from "rxjs";
-import { Dict as DictStats } from "../list/dict.model";
 import { AppHighlightBig } from "../app-highlight-big";
 import { AsyncPipe, TitleCasePipe } from "@angular/common";
-import { ListService } from "../list/list.service";
-import { ExpenseService } from "../expense.service";
-import { Expense } from "../expense.model";
 import { StatsSelectorComponent } from "./category-selector/stats-selector.component";
+import { StatsService } from "./stats.service";
 
+/**
+ * Service responsible for managing streams of Expense's observable for StatsComponent.
+ * @see StatsComponent
+ * @see ExpenseService
+ */
 @Component({
 	selector: "expense-stats",
 	imports: [
@@ -34,41 +36,20 @@ export class StatsComponent implements OnInit {
 	protected readonly Object = Object;
 
 	/**
-	 * Initialized injecting ListService service
+	 * Initialized injecting StatsService service
 	 * @protected
-	 * @see ListService
+	 * @see StatsService
 	 */
-	protected listService: ListService = inject(ListService);
+	protected statsService: StatsService = inject(StatsService);
 
-	/**
-	 * Initialized injecting ExpenseService service
-	 * @protected
-	 * @see ExpenseService
-	 */
-	protected expenseService: ExpenseService = inject(ExpenseService);
-
-	readonly subtitle: WritableSignal<string> = signal("Expense List");
-
-	/**
-	 * Observable of dictionary keys
-	 * @see DictStats
-	 */
-	expensesKey$: Observable<string[]> = new Observable();
-
-	/**
-	 * Observable of a dictionary of grouped imports Expenses
-	 * @see DictStats
-	 */
-	expensesTotal$: Observable<DictStats<number>> = new Observable();
+	readonly subtitle: WritableSignal<string> = signal("Your list");
 
 	/**
 	 * BehaviorSubject that stores checkbox values from ListSwitchComponent.
 	 * If is true is annually, false is monthly
 	 * @see ListSwitchComponent
 	 */
-	checkboxValue$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
+	checkboxValue$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false,);
 
 	/**
 	 * BehaviorSubject that store selector values from StatsSelectorComponent.
@@ -76,48 +57,8 @@ export class StatsComponent implements OnInit {
 	 */
 	categoryValue$: BehaviorSubject<string> = new BehaviorSubject<string>("all");
 
-	/**
-	 * Filters a list of expenses based on category selector.
-	 *
-	 * @param query - The category value used to filter expenses.
-	 * @param expenses - The array of Expense objects to filter.
-	 * @returns A filtered array of Expense objects, or the original array if no matches are found.
-	 */
-	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
-		query: string,
-		expenses: Expense[],
-	): Expense[] =>
-		query === "all" ? expenses : expenses.filter((e) => e.category === query);
-
 	ngOnInit(): void {
-		const expenseItems$: BehaviorSubject<Expense[]> =
-			this.expenseService.expenseList$;
-		const expenses$ = this.listService.getExpenses$(
-			expenseItems$,
-			this.categoryValue$,
-			this.checkboxValue$,
-			this.filterFn,
-		);
-
-		let filteredDict$: BehaviorSubject<Expense[]> = new BehaviorSubject<
-			Expense[]
-		>([]);
-
-		expenses$.subscribe((dictExpense: DictStats<Expense[]>): void => {
-			const allExpenses: Expense[] = [];
-
-			Object.keys(dictExpense).forEach((key: string): void => {
-				allExpenses.push(...dictExpense[key]);
-			});
-
-			filteredDict$.next(allExpenses);
-		});
-
-		this.expensesKey$ = this.listService.getExpensesKey$(
-			filteredDict$,
-			this.checkboxValue$,
-		);
-		this.expensesTotal$ = this.listService.getExpensesTotalImport$(expenses$);
+		this.statsService.initialize(this.categoryValue$, this.checkboxValue$);
 	}
 
 	/**
