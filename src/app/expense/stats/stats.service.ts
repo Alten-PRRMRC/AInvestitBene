@@ -5,53 +5,53 @@ import { Dict } from "../list/dict.model";
 import { ExpenseService } from "../expense.service";
 
 @Injectable({
-	providedIn: "root",
+  providedIn: "root",
 })
 export class StatsService {
-	/**
-	 * Observable of a dictionary filtered Expense
-	 * @see DictExpense
-	 * @see Expense
-	 */
-	expensesFiltered$: Observable<Dict<Expense[]>> = new Observable();
+  /**
+   * Observable of a dictionary filtered Expense
+   * @see DictExpense
+   * @see Expense
+   */
+  expensesFiltered$: Observable<Dict<Expense[]>> = new Observable();
 
-	/**
-	 * Observable of dictionary keys
-	 * @see DictExpense
-	 */
-	expensesFilteredKey$: Observable<string[]> = new Observable();
+  /**
+   * Observable of dictionary keys
+   * @see DictExpense
+   */
+  expensesFilteredKey$: Observable<string[]> = new Observable();
 
-	/**
-	 * Initialized injecting ExpenseService service
-	 * @protected
-	 * @see ExpenseService
-	 */
-	expenseService: ExpenseService = inject(ExpenseService);
+  /**
+   * Initialized injecting ExpenseService service
+   * @protected
+   * @see ExpenseService
+   */
+  expenseService: ExpenseService = inject(ExpenseService);
 
   /**
    * Observable of a Expense
    * @see Expense
    */
-	expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.expenseList$;
+  expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.expenseList$;
 
-	/**
-	 * Observable of a dictionary of grouped imports Expenses
-	 * @see DictStats
-	 */
-	expensesTotal$: Observable<Dict<number>> = new Observable();
+  /**
+   * Observable of a dictionary of grouped imports Expenses
+   * @see DictStats
+   */
+  expensesTotal$: Observable<Dict<number>> = new Observable();
 
-	/**
-	 * Filters a list of expenses based on category selector.
-	 *
-	 * @param query - The category value used to filter expenses.
-	 * @param expenses - The array of Expense objects to filter.
-	 * @returns A filtered array of Expense objects, or the original array if no matches are found.
-	 */
-	private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
-		query: string,
-		expenses: Expense[],
-	): Expense[] =>
-		query === "all" ? expenses : expenses.filter((e) => e.category === query);
+  /**
+   * Filters a list of expenses based on category selector.
+   *
+   * @param query - The category value used to filter expenses.
+   * @param expenses - The array of Expense objects to filter.
+   * @returns A filtered array of Expense objects, or the original array if no matches are found.
+   */
+  private filterFn: (query: string, expenses: Expense[]) => Expense[] = (
+    query: string,
+    expenses: Expense[],
+  ): Expense[] =>
+    query === "all" ? expenses : expenses.filter((e) => e.category === query);
 
   /**
    * Initializes the expense observables
@@ -63,16 +63,16 @@ export class StatsService {
    * This method sets up `expenses$` as a filtered and grouped observable of expenses,
    * and `expensesKey$` as a derived observable of keys (e.g., months or years) based on the grouping.
    */
-	initialize(
-		queryFilter: BehaviorSubject<string>,
-		checkboxValue$: BehaviorSubject<boolean>,
-	): void {
-		this.expensesFiltered$ = this.expenseService.getExpenses$(
-			this.expenseItems$,
-			queryFilter,
-			checkboxValue$,
-			this.filterFn,
-		);
+  initialize(
+    queryFilter: BehaviorSubject<string>,
+    checkboxValue$: BehaviorSubject<boolean>,
+  ): void {
+    this.expensesFiltered$ = this.expenseService.getExpenses$(
+      this.expenseItems$,
+      queryFilter,
+      checkboxValue$,
+      this.filterFn,
+    );
 
     this.expensesFilteredKey$ =
       this.expensesFiltered$.pipe(
@@ -88,8 +88,8 @@ export class StatsService {
         )
       );
 
-		this.expensesTotal$ = this.expenseService.getExpensesTotalImport$(
-			this.expensesFiltered$,
-		);
-	}
+    this.expensesTotal$ = this.expenseService.getExpensesTotalImport$(
+      this.expensesFiltered$,
+    );
+  }
 }
