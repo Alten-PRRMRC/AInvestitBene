@@ -2,9 +2,9 @@
 
 import { inject, Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable, switchMap } from "rxjs";
-import { Dict } from "../../../shared/models/dict.model";
+import { Dict } from "@shared/models/dict.model";
 import { Expense } from "@shared/models/expense.model";
-import { ExpenseService } from "../expense/expense.service";
+import { ExpenseService } from "@core/services";
 
 /**
  * Service responsible for managing streams of Expense's observable for ListComponent.
@@ -15,6 +15,13 @@ import { ExpenseService } from "../expense/expense.service";
 	providedIn: "root",
 })
 export class ListService {
+	/**
+	 * Initialized injecting ExpenseService service
+	 * @protected
+	 * @see ExpenseService
+	 */
+	protected expenseService: ExpenseService = inject(ExpenseService);
+
 	/**
 	 * Observable of a dictionary filtered Expense
 	 * @see DictExpense
@@ -27,13 +34,6 @@ export class ListService {
 	 * @see Dict
 	 */
 	expensesFilteredKey$: Observable<string[]> = new Observable();
-
-	/**
-	 * Initialized injecting ExpenseService service
-	 * @protected
-	 * @see ExpenseService
-	 */
-	protected expenseService: ExpenseService = inject(ExpenseService);
 
 	/**
 	 * Observable of a Expense

@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
 	/** Used to check if expenses$ is not a dict empty
 	 * @protected
 	 */
-	protected readonly Object = Object;
+	protected readonly Object: ObjectConstructor = Object;
 
 	/**
 	 * List of table title based on Expense
@@ -58,6 +58,11 @@ export class ListComponent implements OnInit {
 	checkboxValue$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
 		false,
 	);
+
+	/**
+	 * Category value to highlight in list
+	 */
+	highlightCategory: string = "cryptocurrency";
 
 	ngOnInit(): void {
 		this.listService.initialize(this.searchQuery$, this.checkboxValue$);

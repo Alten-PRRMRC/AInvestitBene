@@ -1,6 +1,6 @@
 // Import required modules
 
-import { CommonModule, formatDate } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
 import {
 	AbstractControl,
@@ -81,6 +81,8 @@ export class FormComponent implements OnInit {
 	 */
 	private _currentExpense: Expense | undefined;
 
+	private _currentDate: string = new Date().toISOString().split("T")[0];
+
 	/**
 	 * The reactive form group that contains all form controls:
 	 * - Description: Required, minimum 2 characters
@@ -99,9 +101,7 @@ export class FormComponent implements OnInit {
 		category: new FormControl(this._expenseService.categories[0], [
 			Validators.required,
 		]),
-		date: new FormControl(formatDate(Date.now(), "yyyy-MM-dd", "en"), [
-			Validators.required,
-		]),
+		date: new FormControl(this._currentDate, [Validators.required]),
 	});
 
 	ngOnInit(): void {
@@ -174,14 +174,14 @@ export class FormComponent implements OnInit {
 			description: "",
 			import: 1,
 			category: this._expenseService.categories[0],
-			date: formatDate(Date.now(), "yyyy-MM-dd", "en"),
+			date: this._currentDate,
 		};
 		const value = expense
 			? {
 					description: expense.description,
 					import: expense.import,
 					category: expense.category,
-					date: formatDate(expense.date, "yyyy-MM-dd", "en"),
+					date: expense.date.toISOString().split("T")[0],
 				}
 			: defaultValue;
 		this.expenseForm.reset(value);

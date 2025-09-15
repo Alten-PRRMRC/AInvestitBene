@@ -9,12 +9,12 @@ import { SafeHtml } from "@angular/platform-browser";
 })
 export class CategoryPipe implements PipeTransform {
 	/**
-	 * Add css class when the category is 'Cryptocurrency'
+	 * Add css class to category argument
 	 * @param value - String where pipes is used
 	 * @return SafeHtml
 	 */
-	transform(value: string): SafeHtml {
-		return value.toLocaleLowerCase() === "cryptocurrency"
+	transform(value: string, highlightCategory: string): SafeHtml {
+		return value.toLocaleLowerCase() === highlightCategory
 			? `<b class="badge badge-dash badge-warning bg-warning text-warning-content">${value}</b>`
 			: value;
 	}

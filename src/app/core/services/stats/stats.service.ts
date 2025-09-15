@@ -28,7 +28,7 @@ export class StatsService {
 	expenseService: ExpenseService = inject(ExpenseService);
 
 	/**
-	 * Observable of a Expense
+	 * Observable of an Expense
 	 * @see Expense
 	 */
 	expenseItems$: BehaviorSubject<Expense[]> = this.expenseService.expenseList$;

@@ -81,8 +81,9 @@ export class ExpenseService implements OnDestroy {
 	 */
 	updateItem(updatedItem: Expense): void {
 		const currentItems: Expense[] = this._expenseList$.getValue();
-		const updatedItems: Expense[] = currentItems.flatMap((item) =>
-			item.id === updatedItem.id ? updatedItem : item,
+		const updatedItems: Expense[] = currentItems.flatMap(
+			(item: Expense): Expense =>
+				item.id === updatedItem.id ? updatedItem : item,
 		);
 		this._expenseList$.next(updatedItems);
 		this.saveToLocalStorage(updatedItems);
@@ -95,7 +96,9 @@ export class ExpenseService implements OnDestroy {
 	 */
 	deleteItem(itemId: string): void {
 		const currentItems: Expense[] = this._expenseList$.getValue();
-		const updatedItems = currentItems.filter((item) => item.id !== itemId);
+		const updatedItems: Expense[] = currentItems.filter(
+			(item: Expense): boolean => item.id !== itemId,
+		);
 		this._expenseList$.next(updatedItems);
 		this.saveToLocalStorage(updatedItems);
 	}
@@ -106,7 +109,7 @@ export class ExpenseService implements OnDestroy {
 	 */
 	getById(id: string | undefined): Expense | undefined {
 		return id
-			? this._expenseList$.getValue().find((e) => e.id === id)
+			? this._expenseList$.getValue().find((e: Expense): boolean => e.id === id)
 			: undefined;
 	}
 
@@ -137,9 +140,12 @@ export class ExpenseService implements OnDestroy {
 		checkboxValue$: BehaviorSubject<boolean>,
 		filterFn: (query: string, expenses: Expense[]) => Expense[],
 	): Observable<Dict<Expense[]>> {
-		const filteredExpenses$ = combineLatest([query$, expenseItems$]).pipe(
-			map(([query, expenses]) => {
-				const filtered = filterFn(query, expenses);
+		const filteredExpenses$: Observable<Expense[]> = combineLatest([
+			query$,
+			expenseItems$,
+		]).pipe(
+			map(([query, expenses]: [string, Expense[]]): Expense[] => {
+				const filtered: Expense[] = filterFn(query, expenses);
 				return filtered;
 			}),
 		);
@@ -172,12 +178,15 @@ export class ExpenseService implements OnDestroy {
 				// transformed in a dictionary keys.
 				const keys: string[] = Object.keys(obj); // Get all the keys from Expense's dictionary and sort them
 				return checkboxValue$.value
-					? // If checkbox
+					? // If checkbox is true, annually sorted decrescent.
 						keys.sort(
 							(a: string, b: string): number => parseInt(b) - parseInt(a),
 						)
-					: // is true, annually sorted decrescent.
-						keys.sort(); // Otherwise false, monthly sorted alphabetically.
+					: // Otherwise false, sort by monthly
+						keys.sort(
+							(a: string, b: string) =>
+								new Date(a).getTime() - new Date(b).getTime(),
+						);
 			}),
 		);
 	}

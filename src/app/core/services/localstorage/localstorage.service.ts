@@ -35,7 +35,7 @@ export class LocalstorageService {
 	 */
 	getItem<T>(key: string): T | null {
 		try {
-			const item = localStorage.getItem(key);
+			const item: string | null = localStorage.getItem(key);
 
 			if (!item) {
 				return null;
