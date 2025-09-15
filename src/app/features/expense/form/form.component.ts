@@ -38,11 +38,7 @@ export class FormComponent implements OnInit {
 	 * Texts used in template changed based in income or expense
 	 * @see _isIncome
 	 */
-	labels = {
-		subtitle: "Add new import",
-		description: "Enter import description",
-		submit: "Save import",
-	};
+	labels: { subtitle: string; description: string; submit: string } | undefined;
 
 	/**
 	 * Check from params from route or from amount of expense to determinate if is an income or not
@@ -81,7 +77,11 @@ export class FormComponent implements OnInit {
 	 */
 	private _currentExpense: Expense | undefined;
 
-	private _currentDate: string = new Date().toISOString().split("T")[0];
+	/**
+	 * Date when instantiate form
+	 * @private
+	 */
+	private _currentDate: string | undefined;
 
 	/**
 	 * The reactive form group that contains all form controls:
@@ -98,13 +98,25 @@ export class FormComponent implements OnInit {
 			noWhitespaceValidator,
 		]),
 		import: new FormControl(1, [Validators.required, Validators.min(1)]),
-		category: new FormControl(this._expenseService.categories[0], [
-			Validators.required,
-		]),
-		date: new FormControl(this._currentDate, [Validators.required]),
+		category: new FormControl([], [Validators.required]),
+		date: new FormControl("", [Validators.required]),
 	});
 
 	ngOnInit(): void {
+		this._currentDate = new Date().toISOString().split("T")[0];
+
+		const labelsIncome = {
+			subtitle: "Add new import",
+			description: "Enter import description",
+			submit: "Save import",
+		};
+
+		const labelsExpense = {
+			subtitle: "Add new export",
+			description: "Enter export description",
+			submit: "Save export",
+		};
+
 		// Track form changes to set formDirty flag for the canDeactivate guard
 		this.expenseForm.valueChanges.subscribe((): void => {
 			this._formDirty = this.expenseForm.dirty;
@@ -120,13 +132,7 @@ export class FormComponent implements OnInit {
 			this._isIncome = this._currentExpense.import >= 0;
 			this._currentExpense.import *= this._isIncome ? 1 : -1;
 		}
-		this.labels = this._isIncome
-			? this.labels
-			: {
-					subtitle: "Add new export",
-					description: "Enter export description",
-					submit: "Save export",
-				};
+		this.labels = this._isIncome ? labelsIncome : labelsExpense;
 		this.resetForm(this._currentExpense);
 	}
 
