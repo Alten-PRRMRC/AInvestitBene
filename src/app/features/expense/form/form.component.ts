@@ -13,6 +13,7 @@ import {
 import { ActivatedRoute, Params, Router, RouterLink } from "@angular/router";
 import { Expense } from "@shared/models/expense.model";
 import { ExpenseService } from "@core/services";
+import { CanFormDeactivate } from "@shared/models";
 
 /**
  * Form validator check if field value is only whitespaces.
@@ -33,7 +34,7 @@ function noWhitespaceValidator(
 	templateUrl: "./form.component.html",
 	styleUrl: "./form.component.css",
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, CanFormDeactivate {
 	/**
 	 * Texts used in template changed based in income or expense
 	 * @see _isIncome
@@ -78,12 +79,6 @@ export class FormComponent implements OnInit {
 	private _currentExpense: Expense | undefined;
 
 	/**
-	 * Date when instantiate form
-	 * @private
-	 */
-	private _currentDate: string | undefined;
-
-	/**
 	 * The reactive form group that contains all form controls:
 	 * - Description: Required, minimum 2 characters
 	 * - Import: Required, minimum value of 1
@@ -97,14 +92,12 @@ export class FormComponent implements OnInit {
 			Validators.minLength(2),
 			noWhitespaceValidator,
 		]),
-		import: new FormControl(1, [Validators.required, Validators.min(1)]),
+		amount: new FormControl(1, [Validators.required, Validators.min(1)]),
 		category: new FormControl([], [Validators.required]),
 		date: new FormControl("", [Validators.required]),
 	});
 
 	ngOnInit(): void {
-		this._currentDate = new Date().toISOString().split("T")[0];
-
 		const labelsIncome = {
 			subtitle: "Add new import",
 			description: "Enter import description",
@@ -151,7 +144,7 @@ export class FormComponent implements OnInit {
 			id: this._currentExpense?.id || Date.now().toString(), // Simple ID generation using timestamp
 			...this.expenseForm.value,
 			date: new Date(this.expenseForm.value.date),
-			import: this.expenseForm.value.import * (this._isIncome ? 1 : -1),
+			amount: this.expenseForm.value.import * (this._isIncome ? 1 : -1),
 		};
 		// If current expense exists it's not new
 		if (this._currentExpense) {
@@ -176,11 +169,13 @@ export class FormComponent implements OnInit {
 	 * @see ExpenseCategory
 	 */
 	resetForm(expense?: Expense): void {
+		// Date when instantiate component
+		const currentDate = new Date().toISOString().split("T")[0];
 		const defaultValue = {
 			description: "",
 			import: 1,
 			category: this._expenseService.categories[0],
-			date: this._currentDate,
+			date: currentDate,
 		};
 		const value = expense
 			? {

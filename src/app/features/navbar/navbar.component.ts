@@ -12,6 +12,7 @@ import {
 	StatsIcon,
 	AboutIcon,
 } from "@assets/icons";
+import { NavbarNavigator } from "@shared/models/navbar.model";
 
 /**
  * Component that shows a navbar to navigate on pages and change app theme.
@@ -39,15 +40,9 @@ export class NavbarComponent {
 
 	/**
 	 * Items of the navbar to navigate through the site
-	 *
-	 * - `label`: The display name of the navigation item;
-	 * - `route`: The Angular route path to navigate to;
-	 * - `iconComponent`: Icon as an Angular component;
-	 *    - `component`: Name of the angular component
-	 *    - `class`: CSS class apply to icon;
-	 * - `exact`: Optional, if `true`, the route match must be exact.
+	 * @see NavbarNavigator
 	 */
-	navItems = [
+	navItems: NavbarNavigator = [
 		{
 			label: "Home",
 			route: "/",
@@ -95,7 +90,7 @@ export class NavbarComponent {
 	 * Key used for storing theme in _localStorage
 	 * @private
 	 */
-	private readonly STORAGE_KEY = "THEME";
+	private readonly STORAGE_KEY: "THEME" = "THEME";
 
 	/**
 	 * Service for interacting with browser's local storage.

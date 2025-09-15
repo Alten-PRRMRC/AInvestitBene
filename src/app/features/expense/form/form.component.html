@@ -36,18 +36,18 @@
       <input
         type="number"
         id="import"
-        formControlName="import"
+        formControlName="amount"
         min="1"
         step="1"
         class="input input-bordered w-full focus:outline-none"
       />
-      @let import = expenseForm.get('import');
-      @if(import?.invalid && import?.touched) {
+      @let amount = expenseForm.get('amount');
+      @if(amount?.invalid && amount?.touched) {
         <section class="bg-error text-error-content rounded-full text-sm mt-1">
-          @if(import?.errors?.['required']) {
+          @if(amount?.errors?.['required']) {
             <span>Amount is required</span>
           }
-          @if(import?.errors?.['min']) {
+          @if(amount?.errors?.['min']) {
             <span>Amount must be positive</span>
           }
         </section>

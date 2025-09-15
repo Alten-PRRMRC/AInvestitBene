@@ -42,14 +42,14 @@ export class LocalstorageService {
 			}
 
 			// Parse the JSON string back to an object
-			const parsedData = JSON.parse(item, (key, value) => {
+			const parsedData: T = JSON.parse(item, (key, value): T => {
 				if (Object.hasOwn(value, "date")) {
 					value.date = new Date(value.date);
 				}
 				return value;
 			});
 
-			return parsedData as T;
+			return parsedData;
 		} catch (error) {
 			console.error("Error retrieving from localStorage:", error);
 			return null;

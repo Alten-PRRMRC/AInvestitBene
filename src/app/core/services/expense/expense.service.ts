@@ -37,7 +37,7 @@ export class ExpenseService implements OnDestroy {
 	 * Initialized with data from localStorage if available, otherwise empty array.
 	 * @private
 	 */
-	private _expenseList$: BehaviorSubject<Expense[]>;
+	private readonly _expenseList$: BehaviorSubject<Expense[]>;
 
 	/**
 	 * Injects the LocalstorageService
@@ -81,7 +81,7 @@ export class ExpenseService implements OnDestroy {
 	 */
 	updateItem(updatedItem: Expense): void {
 		const currentItems: Expense[] = this._expenseList$.getValue();
-		const updatedItems: Expense[] = currentItems.flatMap(
+		const updatedItems: Expense[] = currentItems.map(
 			(item: Expense): Expense =>
 				item.id === updatedItem.id ? updatedItem : item,
 		);
