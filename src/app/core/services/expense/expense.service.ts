@@ -179,9 +179,7 @@ export class ExpenseService implements OnDestroy {
 				const keys: string[] = Object.keys(obj); // Get all the keys from Expense's dictionary and sort them
 				return checkboxValue$.value
 					? // If checkbox is true, annually sorted decrescent.
-						keys.sort(
-							(a: string, b: string): number => parseInt(b) - parseInt(a),
-						)
+						keys.sort((a: string, b: string): number => +b - +a)
 					: // Otherwise false, sort by monthly
 						keys.sort(
 							(a: string, b: string) =>
