@@ -40,24 +40,26 @@ export class AppHighlightBig implements OnDestroy {
 	currencyImport: InputSignal<string> = input("EUR");
 
 	constructor() {
-		effect(() => {
-			const limit = this.limitImport();
-			const value = this.amountImport();
-			const currency = this.currencyImport();
-			const formatted = new Intl.NumberFormat("en-UK", {
+		effect((): void => {
+			const limit: number = this.limitImport();
+			const value: number = this.amountImport();
+			const currency: string = this.currencyImport();
+			const formatted: string = new Intl.NumberFormat("en-UK", {
 				style: "currency",
 				currency: currency,
 			}).format(value);
 
-			let html =
-				value > limit
-					? `<b class="badge badge-dash badge-warning bg-warning text-warning-content">${formatted}</b>`
-					: formatted;
+			let html: string = formatted;
+			if (value > limit) {
+				html = `<b class="badge badge-dash badge-warning bg-warning text-warning-content">${formatted}</b>`;
+			} else if (value < -limit) {
+				html = `<b class="badge badge-dash badge-error bg-error text-error-content">${formatted}</b>`;
+			}
 			this.render.setProperty(this.el.nativeElement, "innerHTML", html);
 		});
 	}
 
-	ngOnDestroy() {
+	ngOnDestroy(): void {
 		this.el.nativeElement.innerHTML = "";
 	}
 }
