@@ -1,0 +1,99 @@
+<section class="p-6 max-w-xl mx-auto bg-base-100 rounded-lg shadow-md">
+  <section class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold text-base-content">{{ this.labels?.subtitle }}</h2>
+    <a [routerLink]="['/']" class="btn btn-sm btn-outline btn-error">X</a>
+  </section>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <section>
+      <label for="description" class="label">
+        <span class="label-text">Description</span>
+      </label>
+      <input
+        type="text"
+        id="description"
+        formControlName="description"
+        [placeholder]="this.labels?.description"
+        class="input input-bordered w-full focus:outline-none"
+      />
+      @let description = expenseForm.get('description');
+      @if(description?.invalid && description?.touched) {
+        <section class="bg-error text-error-content rounded-full text-sm mt-1">
+          @if(description?.errors?.['required'] || description?.errors?.['noWhitespace']) {
+            <span>Description is required</span>
+          }
+          @if(description?.errors?.['minlength'] && !description?.errors?.['noWhitespace']) {
+            <span>Description must be at least {{ description?.errors?.['minlength'].requiredLength }} characters</span>
+          }
+        </section>
+      }
+    </section>
+
+    <section>
+      <label for="import" class="label">
+        <span class="label-text">Amount</span>
+      </label>
+      <input
+        type="number"
+        id="import"
+        formControlName="amount"
+        min="1"
+        step="1"
+        class="input input-bordered w-full focus:outline-none"
+      />
+      @let amount = expenseForm.get('amount');
+      @if(amount?.invalid && amount?.touched) {
+        <section class="bg-error text-error-content rounded-full text-sm mt-1">
+          @if(amount?.errors?.['required']) {
+            <span>Amount is required</span>
+          }
+          @if(amount?.errors?.['min']) {
+            <span>Amount must be positive</span>
+          }
+        </section>
+      }
+    </section>
+
+    <section>
+      <label for="category" class="label">
+        <span class="label-text">Category</span>
+      </label>
+      <select id="category" formControlName="category" class="select select-bordered w-full focus:outline-none">
+        @let categories = this._expenseService.categories;
+        @for(category of categories; track category) {
+          <option [value]="category">
+            {{ category | titlecase }}
+          </option>
+        }
+      </select>
+    </section>
+
+    <section>
+      <label for="date" class="label">
+        <span class="label-text">Date</span>
+      </label>
+      <input
+        type="date"
+        id="date"
+        formControlName="date"
+        class="input input-bordered w-full focus:outline-none"
+      />
+      @let date = expenseForm.get('date');
+      @if(date?.invalid && date?.touched) {
+        <section class="bg-error text-error-content rounded-full text-sm mt-1">
+          @if(date?.errors?.['required']) {
+            <span>Date is required</span>
+          }
+        </section>
+      }
+    </section>
+    <section class="flex justify-end gap-4 pt-4">
+      <button type="submit" [disabled]="expenseForm.invalid" class="btn btn-primary">
+        {{ this.labels?.submit }}
+      </button>
+      <button type="button" (click)="resetForm()" class="btn btn-outline btn-error">
+        Reset
+      </button>
+    </section>
+  </form>
+</section>

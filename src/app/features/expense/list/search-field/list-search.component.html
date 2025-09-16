@@ -1,0 +1,13 @@
+<label class="flex items-center w-full h-[38px] overflow-hidden border rounded-md text-center group" for="searchbar">
+  <input
+    #searchbar
+    class="w-[95%] h-full border-none text-center focus:outline-none"
+    type="text"
+    placeholder="Type any description to filter"
+    (input)="onSearchUpdate(searchbar.value)"
+    aria-label="Search input"
+  />
+  <p class="w-[50px] h-full flex items-center justify-center group-hover:bg-info select-none">
+    <expense-list-icon-search></expense-list-icon-search>
+  </p>
+</label>

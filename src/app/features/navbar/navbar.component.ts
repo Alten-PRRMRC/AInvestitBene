@@ -1,0 +1,122 @@
+// Import required modules
+
+import { Component, inject } from "@angular/core";
+import { RouterLink, RouterLinkActive } from "@angular/router";
+import { LocalstorageService } from "@core/services/localstorage/localstorage.service";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import {
+	SunIcon,
+	MoonIcon,
+	HomeIcon,
+	AddIcon,
+	StatsIcon,
+	AboutIcon,
+} from "@assets/icons";
+import { NavbarNavigator } from "@shared/models/navbar.model";
+
+/**
+ * Component that shows a navbar to navigate on pages and change app theme.
+ * Theme value is serialized to persist on page refresh
+ * @see onCheckboxChange
+ */
+@Component({
+	selector: "app-navbar",
+	imports: [
+		RouterLink,
+		RouterLinkActive,
+		ReactiveFormsModule,
+		SunIcon,
+		MoonIcon,
+		HomeIcon,
+		AddIcon,
+		StatsIcon,
+		AboutIcon,
+	],
+	templateUrl: "./navbar.component.html",
+	styleUrl: "./navbar.component.css",
+})
+export class NavbarComponent {
+	private readonly iconClass = "size-[1.2em] fill-current";
+
+	/**
+	 * Items of the navbar to navigate through the site
+	 * @see NavbarNavigator
+	 */
+	navItems: NavbarNavigator = [
+		{
+			label: "Home",
+			route: "/",
+			iconComponent: {
+				component: "app-navbar-icon-home",
+				class: this.iconClass,
+			},
+			exact: true,
+		},
+		{
+			label: "Add",
+			route: "/add",
+			iconComponent: {
+				component: "app-navbar-icon-add",
+				class: this.iconClass,
+			},
+		},
+		{
+			label: "Stats",
+			route: "/stats",
+			iconComponent: {
+				component: "app-navbar-icon-stats",
+				class: this.iconClass,
+			},
+		},
+		{
+			label: "About",
+			route: "/about",
+			iconComponent: {
+				component: "app-navbar-icon-about",
+				class: this.iconClass,
+			},
+		},
+	];
+
+	/**
+	 * Form control to manage application's theme setting.
+	 * The value of the theme is set in the template.
+	 */
+	themeController: FormControl<boolean | null> = new FormControl<
+		boolean | null
+	>(false);
+
+	/**
+	 * Key used for storing theme in _localStorage
+	 * @private
+	 */
+	private readonly STORAGE_KEY: "THEME" = "THEME";
+
+	/**
+	 * Service for interacting with browser's local storage.
+	 * @private
+	 */
+	private _localStorage: LocalstorageService = inject(LocalstorageService);
+
+	constructor() {
+		// Fix bug when use '--preferdark' in daisyUI as force the theme with that flag and broke themeController.
+		const preferTheme: boolean = window.matchMedia(
+			"(prefers-color-scheme: dark)",
+		).matches;
+		this.themeController.setValue(
+			this._localStorage.getItem<boolean>(this.STORAGE_KEY) ?? preferTheme,
+		);
+	}
+
+	/**
+	 * Handles checkbox change event to update theme preference and serialize it.
+	 * @param event - Checkbox event, set theme status to themeController
+	 * @see themeController
+	 * @see LocalStorageService
+	 */
+	onCheckboxChange(event: Event): void {
+		const value: boolean = (event.target as HTMLInputElement).checked;
+		this.themeController.setValue(value);
+		this._localStorage.setItem<boolean>(this.STORAGE_KEY, value);
+	}
+}

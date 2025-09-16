@@ -1,0 +1,11 @@
+tr:hover:not(thead tr){
+  background-color: var(--color-base-300);
+}
+
+tr {
+  width: 100%;
+}
+
+td {
+  width: 50%;
+}

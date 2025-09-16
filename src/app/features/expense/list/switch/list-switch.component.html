@@ -1,0 +1,12 @@
+<fieldset class="rounded-box border p-4 flex items-center justify-around gap-4">
+  <legend class="text-lg font-semibold">Expenses options</legend>
+  <p class="font-bold m-0">Monthly</p>
+  <input
+    type="checkbox"
+    class="toggle toggle-xl"
+    (change)="onCheckboxChange($event)"
+    aria-label="Toggle between monthly and annually"
+  />
+  <p class="font-bold m-0">Annually</p>
+</fieldset>
+
