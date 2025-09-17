@@ -1,0 +1,107 @@
+{
+  "configVersion": 1,
+  "timestamp": 1758106206578,
+  "index": "https://alten-prrmrc.github.io/AInvestitBene/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-6XPIBC3J.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-6ZYKICXL.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-ASCH2KIC.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-C4SVZKCS.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-LIBZ4LQQ.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-MX4IP422.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-RUSBGT4I.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-TJCNXAR3.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-U4K2IGQ4.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-UM35NXLB.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-UO7UDMPQ.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-W6BO4IS2.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-Z2FG56PB.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/chunk-Z7SNU7LG.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/favicon.ico",
+        "https://alten-prrmrc.github.io/AInvestitBene/index.html",
+        "https://alten-prrmrc.github.io/AInvestitBene/main-I52K3FEN.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/manifest.webmanifest",
+        "https://alten-prrmrc.github.io/AInvestitBene/polyfills-B6TNHZQ6.js",
+        "https://alten-prrmrc.github.io/AInvestitBene/styles-ELVTSWTJ.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-128x128.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-144x144.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-152x152.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-192x192.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-384x384.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-512x512.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-72x72.png",
+        "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-6XPIBC3J.js": "111f7127b7cf186d98248f84d6a91503a1d85cd4",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-6ZYKICXL.js": "866125b575afff67112c130fdefc4901a97cf91b",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-ASCH2KIC.js": "37744fec7ae44a4edc113dd0209431867753a4f1",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-C4SVZKCS.js": "0478d7b029605e1b11e9af4569ac95163ba5ec7e",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-LIBZ4LQQ.js": "2803976284f1b0bbff4084de54f61658c5232185",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-MX4IP422.js": "60462dcfd2b9fb812e019fc58b6ad65d4df0a496",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-RUSBGT4I.js": "5268947a6502c7b2c4a9bb1474489c401ac39670",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-TJCNXAR3.js": "858294ff9d6a80fcb9502730996e0880fcc656c7",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-U4K2IGQ4.js": "ee5a70b8beb17ccffc556dbd160ad15ecf803727",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-UM35NXLB.js": "fa864a5a87871d44f307f0a03f82c9854e043bd6",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-UO7UDMPQ.js": "1eedea162b4eeab4517a1a0fcc840233381ee59c",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-W6BO4IS2.js": "666eeb2a1e54041719898c837eb423a83d73ac79",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-Z2FG56PB.js": "29d69c93d04fb63597f84f71dab552b4299837b8",
+    "https://alten-prrmrc.github.io/AInvestitBene/chunk-Z7SNU7LG.js": "abb060d064d99cbc865dce499ac366dda565fb33",
+    "https://alten-prrmrc.github.io/AInvestitBene/favicon.ico": "ab3952875f04d3419a82abd577a66de7477fa056",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "https://alten-prrmrc.github.io/AInvestitBene/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "https://alten-prrmrc.github.io/AInvestitBene/index.html": "5e3fbe194924baacae04f86fde8d76fa8b9da92a",
+    "https://alten-prrmrc.github.io/AInvestitBene/main-I52K3FEN.js": "66af8d06b4ac21d1013ede318964da844427c799",
+    "https://alten-prrmrc.github.io/AInvestitBene/manifest.webmanifest": "91d354dd122428aba1d2e032b9709a94f2f88701",
+    "https://alten-prrmrc.github.io/AInvestitBene/polyfills-B6TNHZQ6.js": "bf76ac291d7f51c1139b7edcf86b359a30c08c64",
+    "https://alten-prrmrc.github.io/AInvestitBene/styles-ELVTSWTJ.css": "9b78d457ff32aa1bf4d6ad80376812996aa637f9"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
