@@ -89,6 +89,7 @@ export class StatsService {
 
 		this.expensesTotal$ = this.expenseService.getExpensesTotalImport$(
 			this.expensesFiltered$,
+			this.expensesFilteredKey$,
 		);
 	}
 }

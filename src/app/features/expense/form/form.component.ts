@@ -81,7 +81,7 @@ export class FormComponent implements OnInit, CanFormDeactivate {
 	/**
 	 * The reactive form group that contains all form controls:
 	 * - Description: Required, minimum 2 characters
-	 * - Import: Required, minimum value of 1
+	 * - Amount: Required, minimum value of 1
 	 * - Category: Required, defaults to the first element of ExpenseCategory
 	 * - Date: Required, defaults to current date
 	 * @see ExpenseCategory
@@ -122,8 +122,8 @@ export class FormComponent implements OnInit, CanFormDeactivate {
 		const expense = this._expenseService.getById(expenseId);
 		this._currentExpense = expense ? { ...expense } : undefined;
 		if (this._currentExpense) {
-			this._isIncome = this._currentExpense.import >= 0;
-			this._currentExpense.import *= this._isIncome ? 1 : -1;
+			this._isIncome = this._currentExpense.amount >= 0;
+			this._currentExpense.amount *= this._isIncome ? 1 : -1;
 		}
 		this.labels = this._isIncome ? labelsIncome : labelsExpense;
 		this.resetForm(this._currentExpense);
@@ -144,7 +144,7 @@ export class FormComponent implements OnInit, CanFormDeactivate {
 			id: this._currentExpense?.id || Date.now().toString(), // Simple ID generation using timestamp
 			...this.expenseForm.value,
 			date: new Date(this.expenseForm.value.date),
-			amount: this.expenseForm.value.import * (this._isIncome ? 1 : -1),
+			amount: this.expenseForm.value.amount * (this._isIncome ? 1 : -1),
 		};
 		// If current expense exists it's not new
 		if (this._currentExpense) {
@@ -161,7 +161,7 @@ export class FormComponent implements OnInit, CanFormDeactivate {
 	 *
 	 * If current expense doesn't exist, set all user inputs to the default values:
 	 * - Description: empty string
-	 * - Import: 1
+	 * - Amount: 1
 	 * - Category: to the first element of ExpenseCategory
 	 * - Date: current date
 	 *
@@ -173,14 +173,14 @@ export class FormComponent implements OnInit, CanFormDeactivate {
 		const currentDate = new Date().toISOString().split("T")[0];
 		const defaultValue = {
 			description: "",
-			import: 1,
+			amount: 1,
 			category: this._expenseService.categories[0],
 			date: currentDate,
 		};
 		const value = expense
 			? {
 					description: expense.description,
-					import: expense.import,
+					amount: expense.amount,
 					category: expense.category,
 					date: expense.date.toISOString().split("T")[0],
 				}

@@ -36,7 +36,7 @@
               @for(expense of filteredExpense[key]; track expense.id){
                 <tr>
                   <td class="text-base-content">{{ expense.description }}</td>
-                  <td AppHighlightBig [limitImport]="500" class="text-base-content" [amountImport]="expense.import"></td>
+                  <td AppHighlightBig [limitImport]="500" class="text-base-content" [amountImport]="expense.amount"></td>
                   <td [innerHTML]="expense.category | titlecase | category:this.highlightCategory" class="text-base-content"></td>
                   <td class="text-base-content">{{ expense.date | date }}</td>
                   <td>

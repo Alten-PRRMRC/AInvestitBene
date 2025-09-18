@@ -7,7 +7,7 @@ export interface Expense {
 	/** Description of the expense */
 	description: string;
 	/** Monetary value of the expense */
-	import: number;
+	amount: number;
 	/** Category classification of the expense */
 	category: ExpenseCategory;
 	/** Date when the expense occurred */

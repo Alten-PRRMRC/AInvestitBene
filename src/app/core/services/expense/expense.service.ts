@@ -7,6 +7,8 @@ import {
 	map,
 	Observable,
 	OperatorFunction,
+	reduce,
+	withLatestFrom,
 } from "rxjs";
 import { LocalstorageService } from "@core/services/localstorage/localstorage.service";
 import {
@@ -150,7 +152,7 @@ export class ExpenseService implements OnDestroy {
 			}),
 		);
 
-		return combineLatest([filteredExpenses$, checkboxValue$]).pipe(
+		return combineLatest([checkboxValue$, filteredExpenses$]).pipe(
 			this.list_map(),
 		);
 	}
@@ -167,22 +169,18 @@ export class ExpenseService implements OnDestroy {
 		expenseItems$: BehaviorSubject<Expense[]>,
 		checkboxValue$: BehaviorSubject<boolean>,
 	): Observable<string[]> {
-		let expenses$: Observable<Dict<Expense[]>> = combineLatest([
-			// To create a new observable dictionary we combine the follow observables.
-			expenseItems$, // An Observable of filtered Expense list.
-			checkboxValue$, // An BehaviorSubject of booleans from the list-switch checkbox.
-		]).pipe(this.list_map());
-		return expenses$.pipe(
-			// Each element of Expense's dictionary will be
+		return checkboxValue$.pipe(
+			// To filter our expenseItems$ BehaviorSubject only when checkboxValue$ changes
+			withLatestFrom(expenseItems$), // Combine them
+			this.list_map(),
 			map((obj: Dict<Expense[]>): string[] => {
-				// transformed in a dictionary keys.
-				const keys: string[] = Object.keys(obj); // Get all the keys from Expense's dictionary and sort them
+				const keys: string[] = Object.keys(obj);
 				return checkboxValue$.value
 					? // If checkbox is true, annually sorted decrescent.
 						keys.sort((a: string, b: string): number => +b - +a)
 					: // Otherwise false, sort by monthly
 						keys.sort(
-							(a: string, b: string) =>
+							(a: string, b: string): number =>
 								new Date(a).getTime() - new Date(b).getTime(),
 						);
 			}),
@@ -198,17 +196,19 @@ export class ExpenseService implements OnDestroy {
 	 */
 	getExpensesTotalImport$(
 		groupedExpenses$: Observable<Dict<Expense[]>>,
+		groupedKeys$: Observable<string[]>,
 	): Observable<Dict<number>> {
-		return groupedExpenses$.pipe(
-			map((groupedExpenses: Dict<Expense[]>): Dict<number> => {
-				const totals: Dict<number> = {};
-				for (const key in groupedExpenses) {
-					totals[key] = groupedExpenses[key].reduce(
-						(tot: number, expense: Expense): number => tot + expense.import,
-						0,
-					);
-				}
-				return totals;
+		return groupedKeys$.pipe(
+			withLatestFrom(groupedExpenses$),
+			map(([keys, grouped]): Dict<number> => {
+				return keys.reduce(
+					(acc, key) => {
+						const expense = grouped[key] ?? [];
+						acc[key] = expense.reduce((sum, e) => sum + e.amount, 0);
+						return acc;
+					},
+					{} as Dict<number>,
+				);
 			}),
 		);
 	}
@@ -218,20 +218,20 @@ export class ExpenseService implements OnDestroy {
 	 * @return An observable of a dictionary of grouped imports Expenses.
 	 * @private
 	 */
-	private list_map(): OperatorFunction<[Expense[], boolean], Dict<Expense[]>> {
+	private list_map(): OperatorFunction<[boolean, Expense[]], Dict<Expense[]>> {
 		// Each element of this observable will be
 		return map(
-			([expenses, checkbox]: [Expense[], boolean]): Dict<Expense[]> => {
+			([checkbox, expenses]: [boolean, Expense[]]): Dict<Expense[]> => {
 				// transformed in a dictionary.
 				const obj: Dict<Expense[]> = {}; // Initialize an empty dictionary.
-				for (let i: number = 0; i < expenses.length; i++) {
+				for (let expense of expenses) {
 					// For each Expense[] items
-					let key: string = this.getGroupKey(expenses[i], checkbox);
+					let key: string = this.getGroupKey(expense, checkbox);
 					if (!obj[key]) {
 						// If the current key does not exist in the dictionary
 						obj[key] = []; // initialize an empty array
 					}
-					obj[key].push(expenses[i]); // and adds the current Expense to the Expense's array of dictionary
+					obj[key].push(expense); // and adds the current Expense to the Expense's array of dictionary
 				}
 				return obj; // Return populated Expense's dictionary
 			},
