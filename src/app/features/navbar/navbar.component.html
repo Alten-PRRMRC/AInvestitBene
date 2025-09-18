@@ -14,7 +14,7 @@
     }
     <li class="ml-auto w-[100px]">
       <label class="swap swap-rotate p-0">
-        <input type="checkbox" value="business" class="theme-controller" [formControl]="themeController"
+        <input aria-label="Toggle theme" type="checkbox" value="business" class="theme-controller" [formControl]="themeController"
                (change)="onCheckboxChange($event)"/>
         <app-navbar-icon-sun
           class="swap-off h-10 w-10 fill-current"></app-navbar-icon-sun>
@@ -48,7 +48,7 @@
     </a>
   }
   <label class="btn btn-ghost swap swap-rotate flex-1">
-    <input type="checkbox" value="business" class="theme-controller" [formControl]="themeController"
+    <input aria-label="Toggle theme" type="checkbox" value="business" class="theme-controller" [formControl]="themeController"
            (change)="onCheckboxChange($event)">
     <app-navbar-icon-sun
       class="swap-off size-[2em] fill-current"></app-navbar-icon-sun>
